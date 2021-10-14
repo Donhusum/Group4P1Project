@@ -52,4 +52,4 @@ int main() {
 
 
 
-//Dette er en comment
+//Dette er en comment gg
