@@ -50,3 +50,7 @@ int main() {
     fclose(fileHandler1);
     return 0;
 }
+
+
+
+//Dette er en comment hahahahahaha
