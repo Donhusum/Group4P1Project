@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="PlagiarismFinder" targetName="PlagiarismFinder" />
-    </generated>
-  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec80bff5-9901-4881-86b0-91753b45c730" name="Changes" comment="" />
+    <list default="true" id="6dcf827d-1808-4265-81cc-6aaa6fee0327" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ClangdSettings">
-    <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="1zUb3jMH3LRszSDLt6X61ZFCWdl" />
+  <component name="ProjectId" id="1zUr6zouMThvrM3SuBouGViy1Hq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -60,16 +53,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ec80bff5-9901-4881-86b0-91753b45c730" name="Changes" comment="" />
-      <created>1634205419069</created>
+      <changelist id="6dcf827d-1808-4265-81cc-6aaa6fee0327" name="Changes" comment="" />
+      <created>1634213337813</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1634205419069</updated>
-      <workItem from="1634205423272" duration="6721000" />
+      <updated>1634213337813</updated>
+      <workItem from="1634213340112" duration="4000" />
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>
