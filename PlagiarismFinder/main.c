@@ -52,4 +52,4 @@ int main() {
 
 
 
-//Dette er en comment hahahahahaha
+//Dette er en comment
