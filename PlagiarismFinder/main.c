@@ -11,18 +11,17 @@ int main() {
     FILE *fileHandler2;
 
     if ((fileHandler1 = fopen(
-            "C:\\Users\\stefa\\Google Drive\\AAU\\1. semester\\P1\\GIT\\Group4P1Project\\PlagiarismFinder\\HandInFromStudent.txt",
+            "HandInFromStudent.txt",
             "r")) == NULL) {
-        printf("Error, no file ");
+        printf("Error, no file \n");
     }
 
 
-    while ((a=fscanf(fileHandler1, "%s", StringMan1)) != -1) {
-        //printf("%d \n", a);
+    while (fscanf(fileHandler1, "%s", StringMan1) != -1) {
         if ((fileHandler2 = fopen(
-                "C:\\Users\\stefa\\Google Drive\\AAU\\1. semester\\P1\\GIT\\Group4P1Project\\PlagiarismFinder\\OriginalDoc.txt",
+                "OriginalDoc.txt",
                 "r")) == NULL) {
-            printf("Error, no file ");
+            printf("Error, no file \n");
         }
         while (fscanf(fileHandler2, "%s", StringMan2) != -1) {
             if (strcmp(StringMan2, StringMan1) == 0) {
