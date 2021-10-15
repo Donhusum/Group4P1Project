@@ -10,43 +10,33 @@ int main() {
     FILE *fileHandler1;
     FILE *fileHandler2; // Two pointers to handle our files
 
+    //Opens the original doc, and the copy that we will work with
     fileHandler1 = fopen("OriginalDocTester.txt", "w");
     fileHandler2 = fopen("OriginalDoc.txt", "r");
 
-    //File copier/converter
+    //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
+    // removing non-letter, non-blankspace symbols
     while((StringBoy1=fgetc(fileHandler2))!=EOF){
-        //printf("%c",StringBoy1);
         if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
             StringBoy1 = tolower(StringBoy1);
             fputc(StringBoy1, fileHandler1);
-            //printf("%c",StringBoy1);
         }
     }
     fclose(fileHandler1);
     fclose(fileHandler2);
 
+    //A repeat of before, but just with the doc we want to compare.
     fileHandler1 = fopen("HandInFromStudentTester.txt", "w");
     fileHandler2 = fopen("HandInFromStudent.txt", "r");
 
-    //File copier/converter
     while((StringBoy1=fgetc(fileHandler2))!=EOF){
-        //printf("%c",StringBoy1);
         if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
             StringBoy1 = tolower(StringBoy1);
             fputc(StringBoy1, fileHandler1);
-            //printf("%c",StringBoy1);
         }
     }
     fclose(fileHandler1);
     fclose(fileHandler2);
-/*
-    fileHandler1= fopen("OriginalDocTester.txt", "r");
-    while(fscanf(fileHandler1, "%s", StringMan1)==1){
-        printf("%s ", StringMan1);
-    }
-    fclose(fileHandler1);
-*/
-
 
 
     // We have one of the fileHandler pointers open the first text file, it then checks whether it was successful.
