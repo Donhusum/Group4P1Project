@@ -40,12 +40,12 @@
     <property name="cmake.loaded.for.project" value="true" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="PlagiarismFinder" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PlagiarismFinder" TARGET_NAME="PlagiarismFinder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PlagiarismFinder" RUN_TARGET_NAME="PlagiarismFinder">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PlagiarismFinder" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PlagiarismFinder" TARGET_NAME="PlagiarismFinder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PlagiarismFinder" RUN_TARGET_NAME="PlagiarismFinder">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -64,7 +64,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1634213337813</updated>
-      <workItem from="1634213340112" duration="1080000" />
+      <workItem from="1634213340112" duration="2298000" />
+      <workItem from="1634277456264" duration="925000" />
     </task>
     <servers />
   </component>
