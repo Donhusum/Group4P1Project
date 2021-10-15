@@ -18,6 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
@@ -65,7 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1634213337813</updated>
       <workItem from="1634213340112" duration="2298000" />
-      <workItem from="1634277456264" duration="925000" />
+      <workItem from="1634277456264" duration="5739000" />
     </task>
     <servers />
   </component>
