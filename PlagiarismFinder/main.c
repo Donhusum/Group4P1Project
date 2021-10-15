@@ -1,13 +1,38 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 int main() {
 
-    char StringMan1[30], StringMan2[30];  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
+    char StringMan1[30], StringMan2[30], StringBoy1;  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
     long count = 0, sameWord = 0; //Long is just an int that can contain bigger numbers
 
     FILE *fileHandler1;
     FILE *fileHandler2; // Two pointers to handle our files
+
+    fileHandler1 = fopen("OriginalDocTester.txt", "w");
+    fileHandler2 = fopen("OriginalDoc.txt", "r");
+
+    //File copier/converter
+    while((StringBoy1=fgetc(fileHandler2))!=EOF){
+        //printf("%c",StringBoy1);
+        if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
+            StringBoy1 = tolower(StringBoy1);
+            fputc(StringBoy1, fileHandler1);
+            printf("%c",StringBoy1);
+        }
+    }
+    fclose(fileHandler1);
+    fclose(fileHandler2);
+/*
+    fileHandler1= fopen("OriginalDocTester.txt", "r");
+    while(fscanf(fileHandler1, "%s", StringMan1)==1){
+        printf("%s ", StringMan1);
+    }
+    fclose(fileHandler1);
+
+
+
 
     // We have one of the fileHandler pointers open the first text file, it then checks whether it was successful.
     // If it is not, we get the Error message
@@ -42,6 +67,7 @@ int main() {
     printf("Words identical %ld\n", sameWord);
 
     fclose(fileHandler1);
+    */
     return 0;
 }
 
