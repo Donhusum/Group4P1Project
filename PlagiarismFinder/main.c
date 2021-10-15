@@ -19,7 +19,22 @@ int main() {
         if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
             StringBoy1 = tolower(StringBoy1);
             fputc(StringBoy1, fileHandler1);
-            printf("%c",StringBoy1);
+            //printf("%c",StringBoy1);
+        }
+    }
+    fclose(fileHandler1);
+    fclose(fileHandler2);
+
+    fileHandler1 = fopen("HandInFromStudentTester.txt", "w");
+    fileHandler2 = fopen("HandInFromStudent.txt", "r");
+
+    //File copier/converter
+    while((StringBoy1=fgetc(fileHandler2))!=EOF){
+        //printf("%c",StringBoy1);
+        if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
+            StringBoy1 = tolower(StringBoy1);
+            fputc(StringBoy1, fileHandler1);
+            //printf("%c",StringBoy1);
         }
     }
     fclose(fileHandler1);
@@ -30,13 +45,13 @@ int main() {
         printf("%s ", StringMan1);
     }
     fclose(fileHandler1);
-
+*/
 
 
 
     // We have one of the fileHandler pointers open the first text file, it then checks whether it was successful.
     // If it is not, we get the Error message
-    if ((fileHandler1 = fopen("HandInFromStudent.txt", "r")) == NULL) {
+    if ((fileHandler1 = fopen("HandInFromStudentTester.txt", "r")) == NULL) {
         printf("Error, no file \n");
     }
 
@@ -44,7 +59,7 @@ int main() {
     while (fscanf(fileHandler1, "%s", StringMan1) != -1) {
 
         // The other pointer opens the second file in the same manner that we opened the first one
-        if ((fileHandler2 = fopen("OriginalDoc.txt", "r")) == NULL) {
+        if ((fileHandler2 = fopen("OriginalDocTester.txt", "r")) == NULL) {
             printf("Error, no file \n");
         }
 
@@ -67,7 +82,7 @@ int main() {
     printf("Words identical %ld\n", sameWord);
 
     fclose(fileHandler1);
-    */
+
     return 0;
 }
 
