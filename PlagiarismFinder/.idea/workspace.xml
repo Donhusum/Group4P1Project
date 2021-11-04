@@ -51,11 +51,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -66,7 +61,9 @@
       <option name="presentableId" value="Default" />
       <updated>1634213337813</updated>
       <workItem from="1634213340112" duration="2298000" />
-      <workItem from="1634277456264" duration="5739000" />
+      <workItem from="1634277456264" duration="6598000" />
+      <workItem from="1635066475285" duration="113000" />
+      <workItem from="1636020950980" duration="9243000" />
     </task>
     <servers />
   </component>
