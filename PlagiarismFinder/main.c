@@ -2,6 +2,12 @@
 #include <string.h>
 #include <ctype.h>
 
+
+int stringToNumber(char string[]);
+
+int fourFirstStrings(char a[], char b[], char c[], char d[]);
+void numberFile(FILE *fileHandler1);
+
 int main() {
 
     char StringMan1[30], StringMan2[30], StringBoy1;  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
@@ -16,8 +22,8 @@ int main() {
 
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
     // removing non-letter, non-blankspace symbols
-    while((StringBoy1=fgetc(fileHandler2))!=EOF){
-        if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
+    while ((StringBoy1 = fgetc(fileHandler2)) != EOF) {
+        if (isalpha(StringBoy1) != 0 || StringBoy1 == ' '|| StringBoy1 == '.') {
             StringBoy1 = tolower(StringBoy1);
             fputc(StringBoy1, fileHandler1);
         }
@@ -29,8 +35,8 @@ int main() {
     fileHandler1 = fopen("HandInFromStudentTester.txt", "w");
     fileHandler2 = fopen("HandInFromStudent.txt", "r");
 
-    while((StringBoy1=fgetc(fileHandler2))!=EOF){
-        if(isalpha(StringBoy1)!=0||StringBoy1==' ') {
+    while ((StringBoy1 = fgetc(fileHandler2)) != EOF) {
+        if (isalpha(StringBoy1) != 0 || StringBoy1 == ' ' || StringBoy1 == '.') {
             StringBoy1 = tolower(StringBoy1);
             fputc(StringBoy1, fileHandler1);
         }
@@ -38,7 +44,8 @@ int main() {
     fclose(fileHandler1);
     fclose(fileHandler2);
 
-
+/* Simple proof of concept string comparator
+ *
     // We have one of the fileHandler pointers open the first text file, it then checks whether it was successful.
     // If it is not, we get the Error message
     if ((fileHandler1 = fopen("HandInFromStudentTester.txt", "r")) == NULL) {
@@ -72,8 +79,59 @@ int main() {
     printf("Words identical %ld\n", sameWord);
 
     fclose(fileHandler1);
+    */
+
+// Just a tester
+    fileHandler1 = fopen("OriginalDocTester.txt", "r");
+    numberFile(fileHandler1);
+    fclose(fileHandler1);
+
+    int chunkInt1, chunkInt2, chunkInt3;
+    fileHandler1 = fopen("NumberFileOrigin.txt", "r");
+    while (fscanf(fileHandler1, " %d", &chunkInt1) != -1)
+        printf(" %d", chunkInt1);
+
 
     return 0;
+}
+
+
+// Fingerprint function(s)
+
+// Converts a string to a one-digit number
+int stringToNumber(char string[]) {
+    int sLenght = strlen(string);
+    while (sLenght > 9)
+        sLenght = sLenght - 10;
+    return sLenght;
+}
+
+// Generates the chunk number
+int fourFirstStrings(char a[], char b[], char c[], char d[]) {
+    int i, numb = 0;
+    numb = numb + 1000 * stringToNumber(a);
+    numb = numb + 100 * stringToNumber(b);
+    numb = numb + 10 * stringToNumber(c);
+    numb = numb + stringToNumber(d);
+    return numb;
+}
+
+// converts text to number chunks and puts them into a file
+void numberFile(FILE *fileHandler1) {
+    FILE *fileHandler2;
+    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
+    fileHandler2 = fopen("NumberFileOrigin.txt", "w");
+    while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4)>-1){
+        printf(" %s %s %s %s", stringHandler1, stringHandler2, stringHandler3,stringHandler4);
+        fprintf(fileHandler2," %d\n", fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4));
+        while ((dotFinder = fgetc(fileHandler1)) != EOF) {
+            //printf(" %c", dotFinder);
+            if (dotFinder=='.') {
+                break;
+            }
+        }
+    }
+    fclose(fileHandler2);
 }
 
 
