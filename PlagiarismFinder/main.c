@@ -84,6 +84,9 @@ int main() {
     //putchar(chunkInt3);
 
 
+    //Important!!!
+    // If the printer pointer point right before the change and just make 1 change, wil that work?
+
     return 0;
 }
 
@@ -91,7 +94,8 @@ int main() {
 void createWorkFile(FILE *fileIn, FILE *fileOut) {
     char StringBoy;
     while ((StringBoy = fgetc(fileIn)) != EOF) {
-        if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.') {
+        if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' || StringBoy == 'ø' ||
+            StringBoy == 'å') {
             StringBoy = tolower(StringBoy);
             fputc(StringBoy, fileOut);
         }
