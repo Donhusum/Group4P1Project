@@ -141,25 +141,30 @@ void numberFile(FILE *fileHandler1) {
                 }
 	        }
         }
-
-
-
-
-
 	    len = strlen(stringHandler2);
-	    if (stringHandler2[len-1] == '.'){
-	        stringHandler2[len-1] = 0;
-	    }
+        for (i=0; i < len; i++){
+            if (stringHandler2[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler2[j] = stringHandler2[j+1];
+                }
+	        }
+        }
 	    len = strlen(stringHandler3);
-	    if (stringHandler3[len-1] == '.'){
-	        stringHandler3[len-1] = 0;
-	    }
+        for (i=0; i < len; i++){
+            if (stringHandler3[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler3[j] = stringHandler3[j+1];
+                }
+	        }
+        }        
 	    len = strlen(stringHandler4);
-	    if (stringHandler4[len-1] == '.'){
-	        stringHandler4[len-1] = 0;
-	    }
-        
-        
+        for (i=0; i < len; i++){
+            if (stringHandler4[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler4[j] = stringHandler4[j+1];
+                }
+	        }
+        }        
         
         
         printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
