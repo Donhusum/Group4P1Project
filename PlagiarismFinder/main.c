@@ -129,6 +129,39 @@ void numberFile(FILE *fileHandler1) {
     int numberChunk, duplicateChecker, dubVal;
     fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
     while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
+        int len, i, j;
+
+        
+        //Fjerner punktummer til sidst
+	    len = strlen(stringHandler1);
+        for (i=0; i < len; i++){
+            if (stringHandler1[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler1[j] = stringHandler1[j+1];
+                }
+	        }
+        }
+
+
+
+
+
+	    len = strlen(stringHandler2);
+	    if (stringHandler2[len-1] == '.'){
+	        stringHandler2[len-1] = 0;
+	    }
+	    len = strlen(stringHandler3);
+	    if (stringHandler3[len-1] == '.'){
+	        stringHandler3[len-1] = 0;
+	    }
+	    len = strlen(stringHandler4);
+	    if (stringHandler4[len-1] == '.'){
+	        stringHandler4[len-1] = 0;
+	    }
+        
+        
+        
+        
         printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
         numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
         /*
@@ -150,7 +183,6 @@ void numberFile(FILE *fileHandler1) {
     }
     fclose(fileHandler2);
 }
-
 
 
 //Dette er en comment gg
