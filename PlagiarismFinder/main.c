@@ -2,47 +2,36 @@
 #include <string.h>
 #include <ctype.h>
 
+void createWorkFile(FILE *fileIn, FILE *fileOut);
 
 int stringToNumber(char string[]);
 
 int fourFirstStrings(char a[], char b[], char c[], char d[]);
+
 void numberFile(FILE *fileHandler1);
 
 int main() {
 
-    char StringMan1[30], StringMan2[30], StringBoy1;  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
+    char StringMan1[30], StringMan2[30];  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
     long count = 0, sameWord = 0; //Long is just an int that can contain bigger numbers
 
     FILE *fileHandler1;
     FILE *fileHandler2; // Two pointers to handle our files
 
     //Opens the original doc, and the copy that we will work with
-    fileHandler1 = fopen("OriginalDocTester.txt", "w");
-    fileHandler2 = fopen("OriginalDoc.txt", "r");
-
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
     // removing non-letter, non-blankspace symbols
-    while ((StringBoy1 = fgetc(fileHandler2)) != EOF) {
-        if (isalpha(StringBoy1) != 0 || StringBoy1 == ' '|| StringBoy1 == '.') {
-            StringBoy1 = tolower(StringBoy1);
-            fputc(StringBoy1, fileHandler1);
-        }
-    }
-    fclose(fileHandler1);
-    fclose(fileHandler2);
+    createWorkFile(fileHandler1 = fopen("OriginalDoc.txt", "r"), fileHandler2 = fopen("OriginalDocTester.txt", "w"));
 
     //A repeat of before, but just with the doc we want to compare.
-    fileHandler1 = fopen("HandInFromStudentTester.txt", "w");
-    fileHandler2 = fopen("HandInFromStudent.txt", "r");
+    createWorkFile(fileHandler1 = fopen("HandInFromStudent.txt", "r"),
+                   fileHandler2 = fopen("HandInFromStudentTester.txt", "w"));
 
-    while ((StringBoy1 = fgetc(fileHandler2)) != EOF) {
-        if (isalpha(StringBoy1) != 0 || StringBoy1 == ' ' || StringBoy1 == '.') {
-            StringBoy1 = tolower(StringBoy1);
-            fputc(StringBoy1, fileHandler1);
-        }
-    }
-    fclose(fileHandler1);
-    fclose(fileHandler2);
+
+
+
+
+
 
 /* Simple proof of concept string comparator
  *
@@ -88,12 +77,29 @@ int main() {
 
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r");
-    while (fscanf(fileHandler1, " %d", &chunkInt1) != -1)
-        printf(" %d", chunkInt1);
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != -1)
+        printf(" %d %d\n", chunkInt1, chunkInt2);
+
+    //chunkInt3 = getchar();
+    //putchar(chunkInt3);
 
 
     return 0;
 }
+
+// Create workfile function
+void createWorkFile(FILE *fileIn, FILE *fileOut) {
+    char StringBoy;
+    while ((StringBoy = fgetc(fileIn)) != EOF) {
+        if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.') {
+            StringBoy = tolower(StringBoy);
+            fputc(StringBoy, fileOut);
+        }
+    }
+    fclose(fileIn);
+    fclose(fileOut);
+}
+
 
 
 // Fingerprint function(s)
@@ -120,13 +126,24 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 void numberFile(FILE *fileHandler1) {
     FILE *fileHandler2;
     char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
-    fileHandler2 = fopen("NumberFileOrigin.txt", "w");
-    while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4)>-1){
-        printf(" %s %s %s %s", stringHandler1, stringHandler2, stringHandler3,stringHandler4);
-        fprintf(fileHandler2," %d\n", fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4));
+    int numberChunk, duplicateChecker, dubVal;
+    fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
+    while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
+        printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+        numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+        /*
+         * while (fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) != -1) {
+            if (numberChunk == duplicateChecker) {
+                dubVal++;
+
+            }
+        }
+         */
+
+        fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
         while ((dotFinder = fgetc(fileHandler1)) != EOF) {
             //printf(" %c", dotFinder);
-            if (dotFinder=='.') {
+            if (dotFinder == '.') {
                 break;
             }
         }
