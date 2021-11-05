@@ -126,10 +126,11 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 void numberFile(FILE *fileHandler1) {
     FILE *fileHandler2;
     char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
-    int numberChunk, duplicateChecker, dubVal, endDot;
+    int numberChunk, duplicateChecker, dubVal, endDot, scanSucces;
     fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
     while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
         int len, i, j;
+        dubVal = 1;
 
         //Fjerner punktummer til sidst
 	    len = strlen(stringHandler1);
@@ -172,16 +173,23 @@ void numberFile(FILE *fileHandler1) {
         
         printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
         numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-        /*
-         * while (fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) != -1) {
+        
+
+        scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal);
+        printf("Scan succes = %d\n", scanSucces);
+
+        while (fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) != -1) {
+            printf("Duplicate checker = %d dubval = %d\n", duplicateChecker, dubVal);
             if (numberChunk == duplicateChecker) {
                 dubVal++;
 
             }
         }
-         */
+         
+        //Skriver hashet i filen 
+        fprintf(fileHandler2, " %d %d\n", numberChunk, dubVal);
 
-        fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
+        //Flytter dotten, medmindre der findes et slutpunktum
         if (!endDot){
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
                 //printf(" %c", dotFinder);
