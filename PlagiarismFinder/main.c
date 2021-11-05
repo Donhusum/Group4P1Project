@@ -186,3 +186,5 @@ void numberFile(FILE *fileHandler1) {
 
 
 //Dette er en comment gg
+
+//MIN BRANCH
