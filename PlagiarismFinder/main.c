@@ -126,12 +126,11 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 void numberFile(FILE *fileHandler1) {
     FILE *fileHandler2;
     char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
-    int numberChunk, duplicateChecker, dubVal;
+    int numberChunk, duplicateChecker, dubVal, endDot;
     fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
     while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
         int len, i, j;
 
-        
         //Fjerner punktummer til sidst
 	    len = strlen(stringHandler1);
         for (i=0; i < len; i++){
@@ -160,10 +159,14 @@ void numberFile(FILE *fileHandler1) {
 	    len = strlen(stringHandler4);
         for (i=0; i < len; i++){
             if (stringHandler4[i] == '.'){
+                endDot = 1;
 	            for(j = i; j < len; j++){
                     stringHandler4[j] = stringHandler4[j+1];
                 }
 	        }
+            else{
+                endDot = 0;
+            }
         }        
         
         
@@ -179,10 +182,12 @@ void numberFile(FILE *fileHandler1) {
          */
 
         fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
-        while ((dotFinder = fgetc(fileHandler1)) != EOF) {
-            //printf(" %c", dotFinder);
-            if (dotFinder == '.') {
-                break;
+        if (!endDot){
+            while ((dotFinder = fgetc(fileHandler1)) != EOF) {
+                //printf(" %c", dotFinder);
+                if (dotFinder == '.') {
+                    break;
+                }
             }
         }
     }
