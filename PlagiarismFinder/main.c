@@ -74,15 +74,16 @@ int main() {
     fileHandler1 = fopen("OriginalDocTester.txt", "r");
     numberFile(fileHandler1);
     fclose(fileHandler1);
+    printf("1\n");
 
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r");
-    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != -1)
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF){
         printf(" %d %d\n", chunkInt1, chunkInt2);
-
+    }
     //chunkInt3 = getchar();
     //putchar(chunkInt3);
-
+    printf("2\n");
 
     return 0;
 }
@@ -174,14 +175,15 @@ void numberFile(FILE *fileHandler1) {
         numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
 
         //printf("Scanned elements: %d\n", scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal));
-        
-        while ((scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal)) != EOF) {
+        rewind(fileHandler2);
+        while (scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) > -1) {
             if (numberChunk == duplicateChecker) {
                 dubCount = dubVal + 1;
                 //printf("DUBVAL!\n");
             }
             //printf("Duplicate checker = %d dubcount = %d scanSucces = %d\n", duplicateChecker, dubCount, scanSucces);
         }
+
          
         //Skriver hashet i filen 
         fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
