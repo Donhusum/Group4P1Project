@@ -26,49 +26,7 @@ int main() {
     //A repeat of before, but just with the doc we want to compare.
     createWorkFile(fileHandler1 = fopen("HandInFromStudent.txt", "r"),
                    fileHandler2 = fopen("HandInFromStudentTester.txt", "w"));
-
-
-
-
-
-
-
-/* Simple proof of concept string comparator
- *
-    // We have one of the fileHandler pointers open the first text file, it then checks whether it was successful.
-    // If it is not, we get the Error message
-    if ((fileHandler1 = fopen("HandInFromStudentTester.txt", "r")) == NULL) {
-        printf("Error, no file \n");
-    }
-
-    // A loop that loads the next word from the first text file, and breaks if there are no more words to load (it have reached the end of the file)
-    while (fscanf(fileHandler1, "%s", StringMan1) != -1) {
-
-        // The other pointer opens the second file in the same manner that we opened the first one
-        if ((fileHandler2 = fopen("OriginalDocTester.txt", "r")) == NULL) {
-            printf("Error, no file \n");
-        }
-
-        //Another loop like the first one
-        while (fscanf(fileHandler2, "%s", StringMan2) != -1) {
-
-            // strcmp compares two strings, and returns 0 if they are identical. We then write the identical word and count sameWord one up
-            if (strcmp(StringMan2, StringMan1) == 0) {
-                printf("%s, are in both docs\n");
-                sameWord++;
-            }
-        }
-        count++; // Counts one up every time we have checked a word
-        fclose(fileHandler2); // Closes the file, so we can open it again and start over. There must be a better way to do this
-
-    }
-
-    // Prints out the number of words in the file, and tell us how many where identical. 
-    printf("Words in the tested document %ld\n", count);
-    printf("Words identical %ld\n", sameWord);
-
-    fclose(fileHandler1);
-    */
+    
 
 // Just a tester
     fileHandler1 = fopen("OriginalDocTester.txt", "r");
@@ -207,6 +165,18 @@ void numberFile(FILE *fileHandler1) {
 }
 
 
+/*
+ void periodeRemover(char (*dotString)[40]){
+    int len, i, j;
+    for (i=0; i < len; i++){
+        if (*dotString[i] == '.'){
+            for(j = i; j < len; j++){
+                *dotString[j] = *dotString[j+1];
+            }
+        }
+    }
+}
+ */
 //Dette er en comment gg
 
 //MIN BRANCH
