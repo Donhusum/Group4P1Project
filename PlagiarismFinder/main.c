@@ -74,7 +74,7 @@ int main() {
     fileHandler1 = fopen("OriginalDocTester.txt", "r");
     numberFile(fileHandler1);
     fclose(fileHandler1);
-    printf("1\n");
+
 
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r");
@@ -83,7 +83,7 @@ int main() {
     }
     //chunkInt3 = getchar();
     //putchar(chunkInt3);
-    printf("2\n");
+
 
     return 0;
 }
@@ -176,10 +176,10 @@ void numberFile(FILE *fileHandler1) {
 
         //printf("Scanned elements: %d\n", scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal));
         rewind(fileHandler2);
-        while (scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) > -1) {
+        while ((scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal)) > -1) {
             if (numberChunk == duplicateChecker) {
                 dubCount = dubVal + 1;
-                //printf("DUBVAL!\n");
+                printf("DUBVAL!\n");
             }
             //printf("Duplicate checker = %d dubcount = %d scanSucces = %d\n", duplicateChecker, dubCount, scanSucces);
         }
