@@ -10,6 +10,12 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]);
 
 void numberFile(FILE *fileHandler1);
 
+void periodeRemover(char *dotString);
+
+struct array {
+    char string[40];
+};
+
 int main() {
 
     char StringMan1[30], StringMan2[30];  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
@@ -26,7 +32,7 @@ int main() {
     //A repeat of before, but just with the doc we want to compare.
     createWorkFile(fileHandler1 = fopen("HandInFromStudent.txt", "r"),
                    fileHandler2 = fopen("HandInFromStudentTester.txt", "w"));
-    
+
 
 // Just a tester
     fileHandler1 = fopen("OriginalDocTester.txt", "r");
@@ -36,7 +42,7 @@ int main() {
 
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r");
-    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF){
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
         printf(" %d %d\n", chunkInt1, chunkInt2);
     }
     //chunkInt3 = getchar();
@@ -88,51 +94,53 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 // converts text to number chunks and puts them into a file
 void numberFile(FILE *fileHandler1) {
     FILE *fileHandler2;
-    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
+    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder, stringMult[4][40];
+    struct array stringObject1;
     int numberChunk, duplicateChecker, dubVal, endDot, scanSucces, dubCount;
-    fileHandler2 = fopen("NumberFileOrigin.txt", "w+"); //Fejl i mode, vil ikke scanne
+    fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
     while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
         int len, i, j;
 
         //Fjerner punktummer til sidst
-	    len = strlen(stringHandler1);
-        for (i=0; i < len; i++){
-            if (stringHandler1[i] == '.'){
-	            for(j = i; j < len; j++){
-                    stringHandler1[j] = stringHandler1[j+1];
+
+        //periodeRemover(stringHandler1);
+        len = strlen(stringHandler1);
+        for (i = 0; i < len; i++) {
+            if (stringHandler1[i] == '.') {
+                for (j = i; j < len; j++) {
+                    stringHandler1[j] = stringHandler1[j + 1];
                 }
-	        }
+            }
         }
-	    len = strlen(stringHandler2);
-        for (i=0; i < len; i++){
-            if (stringHandler2[i] == '.'){
-	            for(j = i; j < len; j++){
-                    stringHandler2[j] = stringHandler2[j+1];
+        len = strlen(stringHandler2);
+        for (i = 0; i < len; i++) {
+            if (stringHandler2[i] == '.') {
+                for (j = i; j < len; j++) {
+                    stringHandler2[j] = stringHandler2[j + 1];
                 }
-	        }
+            }
         }
-	    len = strlen(stringHandler3);
-        for (i=0; i < len; i++){
-            if (stringHandler3[i] == '.'){
-	            for(j = i; j < len; j++){
-                    stringHandler3[j] = stringHandler3[j+1];
+        len = strlen(stringHandler3);
+        for (i = 0; i < len; i++) {
+            if (stringHandler3[i] == '.') {
+                for (j = i; j < len; j++) {
+                    stringHandler3[j] = stringHandler3[j + 1];
                 }
-	        }
-        }        
-	    len = strlen(stringHandler4);
-        for (i=0; i < len; i++){
-            if (stringHandler4[i] == '.'){
+            }
+        }
+        len = strlen(stringHandler4);
+        for (i = 0; i < len; i++) {
+            if (stringHandler4[i] == '.') {
                 endDot = 1;
-	            for(j = i; j < len; j++){
-                    stringHandler4[j] = stringHandler4[j+1];
+                for (j = i; j < len; j++) {
+                    stringHandler4[j] = stringHandler4[j + 1];
                 }
-	        }
-            else{
+            } else {
                 endDot = 0;
             }
-        }        
-        
-        
+        }
+
+
         printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
         numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
 
@@ -146,13 +154,13 @@ void numberFile(FILE *fileHandler1) {
             //printf("Duplicate checker = %d dubcount = %d scanSucces = %d\n", duplicateChecker, dubCount, scanSucces);
         }
 
-         
+
         //Skriver hashet i filen 
         fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
 
-        
+
         //Flytter dotten, medmindre der findes et slutpunktum
-        if (!endDot){
+        if (!endDot) {
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
                 //printf(" %c", dotFinder);
                 if (dotFinder == '.') {
@@ -165,18 +173,22 @@ void numberFile(FILE *fileHandler1) {
 }
 
 
-/*
- void periodeRemover(char (*dotString)[40]){
+void periodeRemover(char *dotString) {
     int len, i, j;
-    for (i=0; i < len; i++){
-        if (*dotString[i] == '.'){
-            for(j = i; j < len; j++){
-                *dotString[j] = *dotString[j+1];
+    len = strlen(dotString);
+    printf(" %c %c %c %c %c %c\n", dotString[0], dotString[1], dotString[2], dotString[3], dotString[4], dotString[5]);
+    for (i = 0; i < len; i++) {
+        if (dotString[i] == '.') {
+            for (j = i; j < len; j++) {
+                dotString[j] = dotString[j + 1];
             }
         }
     }
+    printf(" %c %c %c %c %c %c\n", dotString[0], dotString[1], dotString[2], dotString[3], dotString[4], dotString[5]);
 }
- */
+
+
+
 //Dette er en comment gg
 
 //MIN BRANCH
