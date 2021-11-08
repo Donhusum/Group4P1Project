@@ -75,11 +75,12 @@ int main() {
     numberFile(fileHandler1);
     fclose(fileHandler1);
 
+
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r");
-    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != -1)
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF){
         printf(" %d %d\n", chunkInt1, chunkInt2);
-
+    }
     //chunkInt3 = getchar();
     //putchar(chunkInt3);
 
@@ -130,25 +131,75 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 void numberFile(FILE *fileHandler1) {
     FILE *fileHandler2;
     char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
-    int numberChunk, duplicateChecker, dubVal;
-    fileHandler2 = fopen("NumberFileOrigin.txt", "w+");
+    int numberChunk, duplicateChecker, dubVal, endDot, scanSucces, dubCount;
+    fileHandler2 = fopen("NumberFileOrigin.txt", "w+"); //Fejl i mode, vil ikke scanne
     while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
+        int len, i, j;
+
+        //Fjerner punktummer til sidst
+	    len = strlen(stringHandler1);
+        for (i=0; i < len; i++){
+            if (stringHandler1[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler1[j] = stringHandler1[j+1];
+                }
+	        }
+        }
+	    len = strlen(stringHandler2);
+        for (i=0; i < len; i++){
+            if (stringHandler2[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler2[j] = stringHandler2[j+1];
+                }
+	        }
+        }
+	    len = strlen(stringHandler3);
+        for (i=0; i < len; i++){
+            if (stringHandler3[i] == '.'){
+	            for(j = i; j < len; j++){
+                    stringHandler3[j] = stringHandler3[j+1];
+                }
+	        }
+        }        
+	    len = strlen(stringHandler4);
+        for (i=0; i < len; i++){
+            if (stringHandler4[i] == '.'){
+                endDot = 1;
+	            for(j = i; j < len; j++){
+                    stringHandler4[j] = stringHandler4[j+1];
+                }
+	        }
+            else{
+                endDot = 0;
+            }
+        }        
+        
+        
         printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
         numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-        /*
-         * while (fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal) != -1) {
+
+        //printf("Scanned elements: %d\n", scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal));
+        rewind(fileHandler2);
+        while ((scanSucces = fscanf(fileHandler2, " %d %d", &duplicateChecker, &dubVal)) > -1) {
             if (numberChunk == duplicateChecker) {
-                dubVal++;
-
+                dubCount = dubVal + 1;
+                printf("DUBVAL!\n");
             }
+            //printf("Duplicate checker = %d dubcount = %d scanSucces = %d\n", duplicateChecker, dubCount, scanSucces);
         }
-         */
 
+         
+        //Skriver hashet i filen 
         fprintf(fileHandler2, " %d %d\n", numberChunk, 1);
-        while ((dotFinder = fgetc(fileHandler1)) != EOF) {
-            //printf(" %c", dotFinder);
-            if (dotFinder == '.') {
-                break;
+
+        
+        //Flytter dotten, medmindre der findes et slutpunktum
+        if (!endDot){
+            while ((dotFinder = fgetc(fileHandler1)) != EOF) {
+                //printf(" %c", dotFinder);
+                if (dotFinder == '.') {
+                    break;
+                }
             }
         }
     }
@@ -156,5 +207,6 @@ void numberFile(FILE *fileHandler1) {
 }
 
 
-
 //Dette er en comment gg
+
+//MIN BRANCH
