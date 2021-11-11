@@ -172,7 +172,6 @@ void numberAccumulator(char location[], int numberChunk){
             fseek(fileHandler3, -1, SEEK_CUR);
             fprintf(fileHandler3, " %d", (dubVal+1));
             fseek(fileHandler3, 0, SEEK_CUR);
-            printf(" Number %d with dublicate numb %d, one up.\n", numberChunk, dubVal);
             break;
         } else {
             fscanf(fileHandler3, " %d", &duplicateChecker);
