@@ -161,7 +161,7 @@ void numberFile(FILE *fileHandler1, char location[]) {
     fclose(fileHandler2);
 }
 
-
+// Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
 void numberAccumulator(char location[], int numberChunk){
     FILE *fileHandler3;
     int dubVal = 0, duplicateChecker;
