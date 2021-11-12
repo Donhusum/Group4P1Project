@@ -169,7 +169,7 @@ void numberAccumulator(char location[], int numberChunk){
     while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
         if (duplicateChecker == numberChunk) {
             fscanf(fileHandler3, " %d", &dubVal);
-            fseek(fileHandler3, -1, SEEK_CUR);
+            fseek(fileHandler3, -2, SEEK_CUR);
             fprintf(fileHandler3, " %d", (dubVal+1));
             fseek(fileHandler3, 0, SEEK_CUR);
             break;
