@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 void createWorkFile(FILE *fileIn, FILE *fileOut);
 
@@ -13,6 +14,8 @@ void numberFile(FILE *fileHandler1, char location[]);
 void numberAccumulator(char location[], int numberChunk);
 
 void periodeRemover(char *dotString);
+
+void compare(char oriFile[], char testFile[]);
 
 struct array {
     char string[40];
@@ -51,7 +54,20 @@ int main() {
     while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
         printf(" %d %d\n", chunkInt1, chunkInt2);
     }
+    printf("\n");
+
     fclose(fileHandler1);
+    fileHandler1 = fopen("NumberFileTester.txt", "r+");
+
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
+        printf(" %d %d\n", chunkInt1, chunkInt2);
+    }
+    fclose(fileHandler1);
+
+
+    compare("NumberFileOrigin.txt", "NumberFileTester.txt");
+    compare("NumberFileTester.txt", "NumberFileOrigin.txt");
+
 
     return 0;
 }
@@ -162,7 +178,7 @@ void numberFile(FILE *fileHandler1, char location[]) {
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
-void numberAccumulator(char location[], int numberChunk){
+void numberAccumulator(char location[], int numberChunk) {
     FILE *fileHandler3;
     int dubVal = 0, duplicateChecker;
     fileHandler3 = fopen(location, "r+");
@@ -170,7 +186,7 @@ void numberAccumulator(char location[], int numberChunk){
         if (duplicateChecker == numberChunk) {
             fscanf(fileHandler3, " %d", &dubVal);
             fseek(fileHandler3, -2, SEEK_CUR);
-            fprintf(fileHandler3, " %d", (dubVal+1));
+            fprintf(fileHandler3, " %d", (dubVal + 1));
             fseek(fileHandler3, 0, SEEK_CUR);
             break;
         } else {
@@ -200,6 +216,26 @@ void periodeRemover(char *dotString) {
     printf(" %c %c %c %c %c %c\n", dotString[0], dotString[1], dotString[2], dotString[3], dotString[4], dotString[5]);
 }
 
+
+void compare(char oriFile[], char testFile[]) {
+    FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
+    int oriNum, testNum, plagCount = 0, testCount = 0;
+    while (fscanf(orif, " %d", &oriNum) != EOF) {
+        while (fscanf(testf, " %d", &testNum) != EOF) {
+            if (oriNum == testNum) {
+                plagCount++;
+            }
+            testCount++;
+            fscanf(testf, " %d", &testNum);
+        }
+        rewind(testf);
+        fscanf(orif, " %d", &oriNum);
+    }
+    printf(" Number of compared sentences = %d\n Number of plagiarism hits = %d\n Percentage plagiarism = %d%%\n",
+           testCount, plagCount, 100 * plagCount / testCount);
+    fclose(orif);
+    fclose(testf);
+}
 
 
 
