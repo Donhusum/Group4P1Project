@@ -225,9 +225,10 @@ void compare(char oriFile[], char testFile[]) {
             if (oriNum == testNum) {
                 plagCount++;
             }
-            testCount++;
+
             fscanf(testf, " %d", &testNum);
         }
+        testCount++;
         rewind(testf);
         fscanf(orif, " %d", &oriNum);
     }
