@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 void createWorkFile(FILE *fileIn, FILE *fileOut);
 
@@ -8,15 +9,14 @@ int stringToNumber(char string[]);
 
 int fourFirstStrings(char a[], char b[], char c[], char d[]);
 
-void numberFile(FILE *fileHandler1, char location[]);
+void numberFile(char origin[], char location[]);
 
 void numberAccumulator(char location[], int numberChunk);
 
 void periodeRemover(char *dotString);
 
-struct array {
-    char string[40];
-};
+void compare(char oriFile[], char testFile[]);
+
 
 int main() {
 
@@ -36,13 +36,10 @@ int main() {
 
 
 // Just a tester
-    fileHandler1 = fopen("OriginalDocTester.txt", "r");
-    numberFile(fileHandler1, "NumberFileOrigin.txt");
-    fclose(fileHandler1);
 
-    fileHandler1 = fopen("HandInFromStudentTester.txt", "r");
-    numberFile(fileHandler1, "NumberFileTester.txt");
-    fclose(fileHandler1);
+    numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
+
+    numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
     int chunkInt1, chunkInt2, chunkInt3;
@@ -51,7 +48,20 @@ int main() {
     while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
         printf(" %d %d\n", chunkInt1, chunkInt2);
     }
+    printf("\n");
+
     fclose(fileHandler1);
+    fileHandler1 = fopen("NumberFileTester.txt", "r+");
+
+    while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
+        printf(" %d %d\n", chunkInt1, chunkInt2);
+    }
+    fclose(fileHandler1);
+
+
+    compare("NumberFileOrigin.txt", "NumberFileTester.txt");
+    compare("NumberFileTester.txt", "NumberFileOrigin.txt");
+
 
     return 0;
 }
@@ -74,12 +84,40 @@ void createWorkFile(FILE *fileIn, FILE *fileOut) {
 
 // Fingerprint function(s)
 
-// Converts a string to a one-digit number
-int stringToNumber(char string[]) {
-    int sLenght = strlen(string);
-    while (sLenght > 9)
-        sLenght = sLenght - 10;
-    return sLenght;
+// converts text to number chunks and puts them into a file
+void numberFile(char origin[], char location[]) {
+    FILE *fileHandler1, *fileHandler2;
+    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
+    int numberChunk;
+    fileHandler1 = fopen(origin, "r");
+    fileHandler2 = fopen(location, "w+");
+    while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
+
+        //Fjerner punktummer til sidst
+        //printf(" Before: %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+        periodeRemover(stringHandler1);
+        periodeRemover(stringHandler2);
+        periodeRemover(stringHandler3);
+        periodeRemover(stringHandler4);
+        
+
+        //printf(" After: %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+        numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+
+        numberAccumulator(location, numberChunk);
+
+
+        //Flytter dotten, medmindre der findes et slutpunktum
+        fseek(fileHandler1, -2, SEEK_CUR);
+        while ((dotFinder = fgetc(fileHandler1)) != EOF) {
+            //printf(" %c", dotFinder);
+            if (dotFinder == '.') {
+                break;
+            }
+        }
+    }
+    fclose(fileHandler1);
+    fclose(fileHandler2);
 }
 
 // Generates the chunk number
@@ -92,87 +130,25 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
     return numb;
 }
 
-// converts text to number chunks and puts them into a file
-void numberFile(FILE *fileHandler1, char location[]) {
-    FILE *fileHandler2;
-    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder, stringMult[4][40];
-    struct array stringObject1;
-    int numberChunk, endDot;
-    fileHandler2 = fopen(location, "w+");
-    while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) > -1) {
-        int len, i, j;
-
-        //Fjerner punktummer til sidst
-
-        //periodeRemover(stringHandler1); Do not currently work!
-        len = strlen(stringHandler1);
-        for (i = 0; i < len; i++) {
-            if (stringHandler1[i] == '.') {
-                for (j = i; j < len; j++) {
-                    stringHandler1[j] = stringHandler1[j + 1];
-                }
-            }
-        }
-        len = strlen(stringHandler2);
-        for (i = 0; i < len; i++) {
-            if (stringHandler2[i] == '.') {
-                for (j = i; j < len; j++) {
-                    stringHandler2[j] = stringHandler2[j + 1];
-                }
-            }
-        }
-        len = strlen(stringHandler3);
-        for (i = 0; i < len; i++) {
-            if (stringHandler3[i] == '.') {
-                for (j = i; j < len; j++) {
-                    stringHandler3[j] = stringHandler3[j + 1];
-                }
-            }
-        }
-        len = strlen(stringHandler4);
-        for (i = 0; i < len; i++) {
-            if (stringHandler4[i] == '.') {
-                endDot = 1;
-                for (j = i; j < len; j++) {
-                    stringHandler4[j] = stringHandler4[j + 1];
-                }
-            } else {
-                endDot = 0;
-            }
-        }
-
-
-        printf(" %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-        numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-
-        numberAccumulator(location, numberChunk);
-
-
-        //Flytter dotten, medmindre der findes et slutpunktum
-        if (!endDot) {
-            while ((dotFinder = fgetc(fileHandler1)) != EOF) {
-                //printf(" %c", dotFinder);
-                if (dotFinder == '.') {
-                    break;
-                }
-            }
-        }
-    }
-    fclose(fileHandler2);
+// Converts a string to a one-digit number
+int stringToNumber(char string[]) {
+    int sLenght = strlen(string);
+    while (sLenght > 9)
+        sLenght = sLenght - 10;
+    return sLenght;
 }
 
-
-void numberAccumulator(char location[], int numberChunk){
+// Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
+void numberAccumulator(char location[], int numberChunk) {
     FILE *fileHandler3;
     int dubVal = 0, duplicateChecker;
     fileHandler3 = fopen(location, "r+");
     while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
         if (duplicateChecker == numberChunk) {
             fscanf(fileHandler3, " %d", &dubVal);
-            fseek(fileHandler3, -1, SEEK_CUR);
-            fprintf(fileHandler3, " %d", (dubVal+1));
+            fseek(fileHandler3, -2, SEEK_CUR);
+            fprintf(fileHandler3, " %d", (dubVal + 1));
             fseek(fileHandler3, 0, SEEK_CUR);
-            printf(" Number %d with dublicate numb %d, one up.\n", numberChunk, dubVal);
             break;
         } else {
             fscanf(fileHandler3, " %d", &duplicateChecker);
@@ -190,7 +166,6 @@ void numberAccumulator(char location[], int numberChunk){
 void periodeRemover(char *dotString) {
     int len, i, j;
     len = strlen(dotString);
-    printf(" %c %c %c %c %c %c\n", dotString[0], dotString[1], dotString[2], dotString[3], dotString[4], dotString[5]);
     for (i = 0; i < len; i++) {
         if (dotString[i] == '.') {
             for (j = i; j < len; j++) {
@@ -198,13 +173,27 @@ void periodeRemover(char *dotString) {
             }
         }
     }
-    printf(" %c %c %c %c %c %c\n", dotString[0], dotString[1], dotString[2], dotString[3], dotString[4], dotString[5]);
 }
 
 
+void compare(char oriFile[], char testFile[]) {
+    FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
+    int oriNum, testNum, plagCount = 0, testCount = 0;
+    while (fscanf(orif, " %d", &oriNum) != EOF) {
+        while (fscanf(testf, " %d", &testNum) != EOF) {
+            if (oriNum == testNum) {
+                plagCount++;
+            }
 
+            fscanf(testf, " %d", &testNum);
+        }
+        testCount++;
+        rewind(testf);
+        fscanf(orif, " %d", &oriNum);
+    }
+    printf(" Number of compared sentences = %d\n Number of plagiarism hits = %d\n Percentage plagiarism = %d%%\n",
+           testCount, plagCount, 100 * plagCount / testCount);
+    fclose(orif);
+    fclose(testf);
+}
 
-
-//Dette er en comment gg
-
-//MIN BRANCH

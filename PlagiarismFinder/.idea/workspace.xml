@@ -39,6 +39,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="settings.editor.selected.configurable" value="advanced.settings" />
   </component>
   <component name="RunManager">
     <configuration name="PlagiarismFinder" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PlagiarismFinder" TARGET_NAME="PlagiarismFinder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PlagiarismFinder" RUN_TARGET_NAME="PlagiarismFinder">
@@ -66,6 +67,12 @@
       <workItem from="1636020950980" duration="12537000" />
       <workItem from="1636110930010" duration="1496000" />
       <workItem from="1636372523767" duration="546000" />
+      <workItem from="1636709162364" duration="9306000" />
+      <workItem from="1636730038512" duration="19000" />
+      <workItem from="1637314085073" duration="1234000" />
+      <workItem from="1637530096444" duration="534000" />
+      <workItem from="1637530664077" duration="240000" />
+      <workItem from="1637530950547" duration="2473000" />
     </task>
     <servers />
   </component>
