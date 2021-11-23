@@ -31,7 +31,7 @@ int main() {
     createWorkFile("OriginalWork.txt", "OriginalDocTester.txt");
 
     //A repeat of before, but just with the doc we want to compare.
-    createWorkFile("TextToBeTested.txt","HandInFromStudentTester.txt");
+    createWorkFile("TextToBeTested.txt", "HandInFromStudentTester.txt");
 
 
 // Just a tester
@@ -43,7 +43,7 @@ int main() {
 
     int chunkInt1, chunkInt2, chunkInt3;
     fileHandler1 = fopen("NumberFileOrigin.txt", "r+");
-    if (fileHandler1==NULL){
+    if (fileHandler1 == NULL) {
         printf(" Error in reading file \n");
     } else {
         while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
@@ -54,7 +54,7 @@ int main() {
         fclose(fileHandler1);
     }
     fileHandler1 = fopen("NumberFileTester.txt", "r+");
-    if (fileHandler1==NULL){
+    if (fileHandler1 == NULL) {
         printf(" Error in reading file \n");
     } else {
         while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
@@ -75,20 +75,15 @@ int main() {
 
 // Create workfile function
 void createWorkFile(char origin[], char testFile[]) {
-    FILE *fileIn;
-    FILE *fileOut;
-    fileIn = fopen(origin, "r");
-    fileOut = fopen(testFile, "w");
-    if (fileIn==NULL){
-        perror("\n Error at createWorkFile: ");
-    } else if (fileOut == NULL) {
+    FILE *fileIn = fopen(origin, "r");
+    FILE *fileOut = fopen(testFile, "w");
+    if (fileIn == NULL || fileOut == NULL) {
         perror("\n Error at createWorkFile: ");
     } else {
         char StringBoy;
         while ((StringBoy = fgetc(fileIn)) != EOF) {
             if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' ||
-                StringBoy == 'ø' ||
-                StringBoy == 'å') {
+                StringBoy == 'ø' || StringBoy == 'å') {
                 StringBoy = tolower(StringBoy);
                 fputc(StringBoy, fileOut);
             }
@@ -109,25 +104,20 @@ void numberFile(char origin[], char location[]) {
     int numberChunk;
     fileHandler1 = fopen(origin, "r");
     fileHandler2 = fopen(location, "w+");
-    if (fileHandler1==NULL || fileHandler2 == NULL){
+    if (fileHandler1 == NULL || fileHandler2 == NULL) {
         printf(" Error in reading file at numberFile\n");
     } else {
         while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) >
                -1) {
 
             //Fjerner punktummer til sidst
-            //printf(" Before: %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
             periodeRemover(stringHandler1);
             periodeRemover(stringHandler2);
             periodeRemover(stringHandler3);
             periodeRemover(stringHandler4);
 
-
-            //printf(" After: %s %s %s %s\n", stringHandler1, stringHandler2, stringHandler3, stringHandler4);
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-
             numberAccumulator(location, numberChunk);
-
 
             //Flytter dotten, medmindre der findes et slutpunktum
             fseek(fileHandler1, -2, SEEK_CUR);
@@ -166,7 +156,7 @@ void numberAccumulator(char location[], int numberChunk) {
     FILE *fileHandler3;
     int dubVal = 0, duplicateChecker;
     fileHandler3 = fopen(location, "r+");
-    if (fileHandler3==NULL){
+    if (fileHandler3 == NULL) {
         printf(" Error in reading file at numberAccumulator 2\n");
     } else {
         while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
@@ -205,7 +195,7 @@ void periodeRemover(char *dotString) {
 
 void compare(char oriFile[], char testFile[]) {
     FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
-    if (orif==NULL || testf == NULL){
+    if (orif == NULL || testf == NULL) {
         printf(" Error in reading file at compare\n");
     } else {
         int oriNum, testNum, plagCount = 0, testCount = 0;
@@ -214,7 +204,6 @@ void compare(char oriFile[], char testFile[]) {
                 if (oriNum == testNum) {
                     plagCount++;
                 }
-
                 fscanf(testf, " %d", &testNum);
             }
             testCount++;
