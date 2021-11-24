@@ -60,8 +60,10 @@ int main() {
 void createWorkFile(FILE *fileIn, FILE *fileOut) {
     char StringBoy;
     while ((StringBoy = fgetc(fileIn)) != EOF) {
-        if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' || StringBoy == 'ø' ||
-            StringBoy == 'å') {
+        if(isalpha(StringBoy) == '\n'){
+            StringBoy = ' ';
+        }
+        if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.') {
             StringBoy = tolower(StringBoy);
             fputc(StringBoy, fileOut);
         }
