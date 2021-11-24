@@ -1,3 +1,3 @@
-"D:\Programmer\CLion\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\PlagiarismFinder.dir/objects.a
-D:\Programmer\MinGW\bin\ar.exe cr CMakeFiles\PlagiarismFinder.dir/objects.a @CMakeFiles\PlagiarismFinder.dir\objects1.rsp
-D:\Programmer\MinGW\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\PlagiarismFinder.dir/objects.a -Wl,--no-whole-archive -o PlagiarismFinder.exe -Wl,--out-implib,libPlagiarismFinder.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\PlagiarismFinder.dir\linklibs.rsp
+"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\PlagiarismFinder.dir/objects.a
+C:\MinGW\bin\ar.exe cr CMakeFiles\PlagiarismFinder.dir/objects.a @CMakeFiles\PlagiarismFinder.dir\objects1.rsp
+C:\MinGW\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\PlagiarismFinder.dir/objects.a -Wl,--no-whole-archive -o PlagiarismFinder.exe -Wl,--out-implib,libPlagiarismFinder.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\PlagiarismFinder.dir\linklibs.rsp

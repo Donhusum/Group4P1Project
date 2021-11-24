@@ -82,7 +82,9 @@ void createWorkFile(char origin[], char testFile[]) {
     } else {
         char StringBoy;
         while ((StringBoy = fgetc(fileIn)) != EOF) {
-            if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' ||
+            if (isalpha(StringBoy) == '\n'){
+                fputc(" ",fileOut);
+            } else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' ||
                 StringBoy == 'ø' || StringBoy == 'å') {
                 StringBoy = tolower(StringBoy);
                 fputc(StringBoy, fileOut);
