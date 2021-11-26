@@ -1,10 +1,10 @@
-"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" "C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder"
--- The C compiler identification is GNU 9.2.0
+"D:\Programmer\CLion\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" "D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder"
+-- The C compiler identification is GNU 6.3.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/MinGW/bin/gcc.exe - skipped
+-- Check for working C compiler: D:/Programmer/MinGW/bin/gcc.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/stefa/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/cmake-build-debug
+-- Build files have been written to: D:/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/cmake-build-debug
