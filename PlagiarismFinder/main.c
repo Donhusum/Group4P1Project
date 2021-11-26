@@ -82,7 +82,7 @@ void createWorkFile(char origin[], char testFile[]) {
     } else {
         char StringBoy;
         while ((StringBoy = fgetc(fileIn)) != EOF) {
-            if (isalpha(StringBoy) == '\n'){
+            if (StringBoy == '\n'){
                 fputc(' ',fileOut);
             } else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' ||
                 StringBoy == 'ø' || StringBoy == 'å') {
