@@ -157,7 +157,6 @@ void numberAccumulator(char location[], int numberChunk) {
     }
 }
 
-// Do currently not work
 void periodeRemover(char *dotString) {
     int len, i, j;
     len = strlen(dotString);
