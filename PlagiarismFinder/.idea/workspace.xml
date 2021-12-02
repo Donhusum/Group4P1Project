@@ -47,6 +47,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Impr/HandIn4" />
     <property name="settings.editor.selected.configurable" value="advanced.settings" />
   </component>
   <component name="RunManager">
@@ -58,11 +59,6 @@
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -90,7 +86,9 @@
       <workItem from="1637587827436" duration="757000" />
       <workItem from="1637703101695" duration="6128000" />
       <workItem from="1637741239712" duration="645000" />
-      <workItem from="1637933543085" duration="310000" />
+      <workItem from="1637933543085" duration="750000" />
+      <workItem from="1638043918216" duration="36000" />
+      <workItem from="1638437462380" duration="5621000" />
     </task>
     <servers />
   </component>

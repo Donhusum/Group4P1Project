@@ -17,55 +17,32 @@ void periodeRemover(char *dotString);
 
 void compare(char oriFile[], char testFile[]);
 
+void printNumbers(char location[]);
+
 
 int main() {
 
-    char StringMan1[30], StringMan2[30];  //Two Char arrays (strings) with capacity to contain 30 chars (a 30 letter string)
+    char StringMan1[30];
 
-    FILE *fileHandler1;
-    FILE *fileHandler2; // Two pointers to handle our files
 
     //Opens the original doc, and the copy that we will work with
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
     // removing non-letter, non-blankspace symbols
     createWorkFile("OriginalWork.txt", "OriginalDocTester.txt");
-
-    //A repeat of before, but just with the doc we want to compare.
     createWorkFile("TextToBeTested.txt", "HandInFromStudentTester.txt");
 
 
-// Just a tester
 
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
 
     numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
-    int chunkInt1, chunkInt2, chunkInt3;
-    fileHandler1 = fopen("NumberFileOrigin.txt", "r+");
-    if (fileHandler1 == NULL) {
-        printf(" Error in reading file \n");
-    } else {
-        while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
-            printf(" %d %d\n", chunkInt1, chunkInt2);
-        }
-        printf("\n");
-
-        fclose(fileHandler1);
-    }
-    fileHandler1 = fopen("NumberFileTester.txt", "r+");
-    if (fileHandler1 == NULL) {
-        printf(" Error in reading file \n");
-    } else {
-        while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
-            printf(" %d %d\n", chunkInt1, chunkInt2);
-        }
-        fclose(fileHandler1);
-    }
-
+    printNumbers("NumberFileOrigin.txt");
+    printNumbers("NumberFileTester.txt");
 
     compare("NumberFileOrigin.txt", "NumberFileTester.txt");
-    compare("NumberFileTester.txt", "NumberFileOrigin.txt");
+    //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
 
     printf("\n You can now close the window \n");
     scanf(" %s", &StringMan1);
@@ -84,8 +61,7 @@ void createWorkFile(char origin[], char testFile[]) {
         while ((StringBoy = fgetc(fileIn)) != EOF) {
             if (StringBoy == '\n'){
                 fputc(' ',fileOut);
-            } else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' || StringBoy == 'æ' ||
-                StringBoy == 'ø' || StringBoy == 'å') {
+            } else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.') {
                 StringBoy = tolower(StringBoy);
                 fputc(StringBoy, fileOut);
             }
@@ -212,10 +188,26 @@ void compare(char oriFile[], char testFile[]) {
             rewind(testf);
             fscanf(orif, " %d", &oriNum);
         }
-        printf(" Number of compared sentences = %d\n Number of plagiarism hits = %d\n Percentage plagiarism = %d%%\n",
+        printf(" Number of compared sentences = %d\n "
+               "Number of plagiarism hits = %d\n "
+               "Percentage plagiarism = %d%%\n",
                testCount, plagCount, 100 * plagCount / testCount);
         fclose(orif);
         fclose(testf);
     }
+}
+
+void printNumbers(char location[]){
+    int chunkInt1, chunkInt2;
+    FILE *fileHandler1 = fopen(location, "r");
+    if (fileHandler1 == NULL) {
+        printf(" Error in reading file \n");
+    } else {
+        while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
+            printf(" %d %d\n", chunkInt1, chunkInt2);
+        }
+        printf("\n");
+    }
+    fclose(fileHandler1);
 }
 
