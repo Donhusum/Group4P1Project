@@ -59,7 +59,8 @@ void createWorkFile(char origin[], char testFile[]) {
     FILE *fileIn = fopen(origin, "r");
     FILE *fileOut = fopen(testFile, "w");
     if (fileIn == NULL || fileOut == NULL) {
-        perror("\n Error reading file: ");
+        printf("\n Error reading file %s :", origin);
+        perror(" ");
         sleep(5);
         exit(0);
     } else {
@@ -220,9 +221,9 @@ void printNumbers(char location[]){
 
 void inputFile(char originalWorkFile[], char testItFile[]){
     printf(" Input the file name of the file to be tested: \n");
-    scanf(" %s",testItFile);
+    scanf(" %[A-Za-z0-9 ._-!]",testItFile);
     printf("\n Input the file name of the file to it should be tested against: \n");
-    scanf(" %s",originalWorkFile);
+    scanf(" %[A-Za-z0-9 ._-!]",originalWorkFile);
 
 }
 
