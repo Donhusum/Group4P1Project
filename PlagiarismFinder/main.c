@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <math.h>
+#include <unistd.h>
 
 void createWorkFile(char origin[], char subject[]);
 
@@ -20,17 +20,21 @@ void compare(char oriFile[], char testFile[]);
 
 void printNumbers(char location[]);
 
+void inputFile(char originalWorkFile[], char testItFile[]);
+
 
 int main() {
 
-    char StringMan1[30];
+    char stringMan1[100] = "OriginalWork.txt", stringMan2[100] = "TextToBeTested.txt";
+    printf(" Plagiarism Finder: \n\n");
 
+    //inputFile(stringMan1, stringMan2);
 
     //Opens the original doc, and the copy that we will work with
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
     // removing non-letter, non-blankspace symbols
-    createWorkFile("OriginalWork.txt", "OriginalDocTester.txt");
-    createWorkFile("TextToBeTested.txt", "HandInFromStudentTester.txt");
+    createWorkFile(stringMan1, "OriginalDocTester.txt");
+    createWorkFile(stringMan2, "HandInFromStudentTester.txt");
 
     printf(" OriginalWork:\n");
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
@@ -45,7 +49,7 @@ int main() {
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
 
     printf("\n You can now close the window \n");
-    scanf(" %s", &StringMan1);
+    scanf(" %s", &stringMan1);
 
     return 0;
 }
@@ -55,7 +59,9 @@ void createWorkFile(char origin[], char testFile[]) {
     FILE *fileIn = fopen(origin, "r");
     FILE *fileOut = fopen(testFile, "w");
     if (fileIn == NULL || fileOut == NULL) {
-        perror("\n Error at createWorkFile: ");
+        perror("\n Error reading file: ");
+        sleep(5);
+        exit(0);
     } else {
         char StringBoy;
         while ((StringBoy = fgetc(fileIn)) != EOF) {
@@ -210,5 +216,13 @@ void printNumbers(char location[]){
         printf("\n");
     }
     fclose(fileHandler1);
+}
+
+void inputFile(char originalWorkFile[], char testItFile[]){
+    printf(" Input the file name of the file to be tested: \n");
+    scanf(" %s",testItFile);
+    printf("\n Input the file name of the file to it should be tested against: \n");
+    scanf(" %s",originalWorkFile);
+
 }
 
