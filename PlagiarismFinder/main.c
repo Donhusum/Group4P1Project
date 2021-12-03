@@ -32,9 +32,7 @@ int main() {
     createWorkFile("TextToBeTested.txt", "HandInFromStudentTester.txt");
 
 
-
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
-
     numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
@@ -78,16 +76,15 @@ void createWorkFile(char origin[], char testFile[]) {
 // converts text to number chunks and puts them into a file
 void numberFile(char origin[], char location[]) {
     FILE *fileHandler1, *fileHandler2;
-    char stringHandler1[40], stringHandler2[40], stringHandler3[40], stringHandler4[40], dotFinder;
+    char stringHandler1[100], stringHandler2[100], stringHandler3[100], stringHandler4[100], dotFinder;
     int numberChunk;
     fileHandler1 = fopen(origin, "r");
     fileHandler2 = fopen(location, "w+");
     if (fileHandler1 == NULL || fileHandler2 == NULL) {
-        printf(" Error in reading file at numberFile\n");
+        perror("\n Error at numberFile: ");
     } else {
         while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) >
                -1) {
-
             //Fjerner punktummer til sidst
             periodeRemover(stringHandler1);
             periodeRemover(stringHandler2);
@@ -96,11 +93,11 @@ void numberFile(char origin[], char location[]) {
 
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
             numberAccumulator(location, numberChunk);
+            //printf(" Numberchunk %d\n", numberChunk);
 
             //Flytter dotten, medmindre der findes et slutpunktum
             fseek(fileHandler1, -2, SEEK_CUR);
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
-                //printf(" %c", dotFinder);
                 if (dotFinder == '.') {
                     break;
                 }
@@ -124,6 +121,7 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 // Converts a string to a one-digit number
 int stringToNumber(char string[]) {
     int sLenght = strlen(string);
+    //printf(" sLenght: %d", sLenght);
     while (sLenght > 9)
         sLenght = sLenght - 10;
     return sLenght;
@@ -134,8 +132,9 @@ void numberAccumulator(char location[], int numberChunk) {
     FILE *fileHandler3;
     int dubVal = 0, duplicateChecker;
     fileHandler3 = fopen(location, "r+");
+
     if (fileHandler3 == NULL) {
-        printf(" Error in reading file at numberAccumulator 2\n");
+        perror("\n Error at numberAccumulator: ");
     } else {
         while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
             if (duplicateChecker == numberChunk) {
@@ -173,7 +172,7 @@ void periodeRemover(char *dotString) {
 void compare(char oriFile[], char testFile[]) {
     FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
     if (orif == NULL || testf == NULL) {
-        printf(" Error in reading file at compare\n");
+        perror("\n Error at compare: ");
     } else {
         int oriNum, testNum, plagCount = 0, testCount = 0;
         while (fscanf(orif, " %d", &oriNum) != EOF) {
@@ -200,7 +199,7 @@ void printNumbers(char location[]){
     int chunkInt1, chunkInt2;
     FILE *fileHandler1 = fopen(location, "r");
     if (fileHandler1 == NULL) {
-        printf(" Error in reading file \n");
+        perror("\n Error at printNumbers: ");
     } else {
         while (fscanf(fileHandler1, " %d %d", &chunkInt1, &chunkInt2) != EOF) {
             printf(" %d %d\n", chunkInt1, chunkInt2);

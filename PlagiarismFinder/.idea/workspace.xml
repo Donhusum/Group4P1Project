@@ -51,6 +51,11 @@
     <property name="settings.editor.selected.configurable" value="advanced.settings" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PlagiarismFinder" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PlagiarismFinder" TARGET_NAME="PlagiarismFinder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PlagiarismFinder" RUN_TARGET_NAME="PlagiarismFinder">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -89,6 +94,8 @@
       <workItem from="1637933543085" duration="750000" />
       <workItem from="1638043918216" duration="36000" />
       <workItem from="1638437462380" duration="6354000" />
+      <workItem from="1638523711698" duration="218000" />
+      <workItem from="1638523964369" duration="2790000" />
     </task>
     <servers />
   </component>
