@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <math.h>
 
 void createWorkFile(char origin[], char subject[]);
 
@@ -31,8 +32,9 @@ int main() {
     createWorkFile("OriginalWork.txt", "OriginalDocTester.txt");
     createWorkFile("TextToBeTested.txt", "HandInFromStudentTester.txt");
 
-
+    printf(" OriginalWork:\n");
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
+    printf(" TestToBeTested:\n");
     numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
@@ -93,7 +95,6 @@ void numberFile(char origin[], char location[]) {
 
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
             numberAccumulator(location, numberChunk);
-            //printf(" Numberchunk %d\n", numberChunk);
 
             //Flytter dotten, medmindre der findes et slutpunktum
             fseek(fileHandler1, -2, SEEK_CUR);
@@ -139,17 +140,18 @@ void numberAccumulator(char location[], int numberChunk) {
         while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
             if (duplicateChecker == numberChunk) {
                 fscanf(fileHandler3, " %d", &dubVal);
-                fseek(fileHandler3, -2, SEEK_CUR);
-                fprintf(fileHandler3, " %d", (dubVal + 1));
-                fseek(fileHandler3, 0, SEEK_CUR);
+                if (dubVal != 9) {
+                    fseek(fileHandler3, -2, SEEK_CUR);
+                    fprintf(fileHandler3, " %d", (dubVal + 1));
+                    fseek(fileHandler3, 0, SEEK_CUR);
+                }
                 break;
             } else {
                 fscanf(fileHandler3, " %d", &duplicateChecker);
             }
-            dubVal = 0;
         }
         if (dubVal == 0) {
-            fprintf(fileHandler3, " %d %d\n", numberChunk, 1);
+            fprintf(fileHandler3, " %d %d  \n", numberChunk, 1);
         }
 
         fclose(fileHandler3);
@@ -198,6 +200,7 @@ void compare(char oriFile[], char testFile[]) {
 void printNumbers(char location[]){
     int chunkInt1, chunkInt2;
     FILE *fileHandler1 = fopen(location, "r");
+    printf(" \n %s \n\n", location);
     if (fileHandler1 == NULL) {
         perror("\n Error at printNumbers: ");
     } else {
