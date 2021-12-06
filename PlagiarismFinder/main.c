@@ -48,6 +48,12 @@ int main() {
     compare("NumberFileOrigin.txt", "NumberFileTester.txt");
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
 
+    remove("OriginalDocTester.txt");
+    remove("HandInFromStudentTester.txt");
+    remove("NumberFileOrigin.txt");
+    remove("NumberFileTester.txt");
+
+
     printf("\n You can now close the window \n");
     scanf(" %s", &stringMan1);
 
@@ -68,6 +74,8 @@ void createWorkFile(char origin[], char testFile[]) {
         while ((StringBoy = fgetc(fileIn)) != EOF) {
             if (StringBoy == '\n'){
                 fputc(' ',fileOut);
+            } else if (StringBoy == '!'||StringBoy == '?'){
+                fputc('.',fileOut);
             } else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.') {
                 StringBoy = tolower(StringBoy);
                 fputc(StringBoy, fileOut);
