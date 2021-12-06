@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "D:/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/main.c" "D:/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/cmake-build-debug/CMakeFiles/PlagiarismFinder.dir/main.c.obj"
+  "C:/Users/stefa/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/main.c" "C:/Users/stefa/Google Drive/AAU/1. semester/P1/GIT/Group4P1Project/PlagiarismFinder/cmake-build-debug/CMakeFiles/PlagiarismFinder.dir/main.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
