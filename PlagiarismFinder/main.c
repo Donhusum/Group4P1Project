@@ -140,10 +140,10 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 
 // Converts a string to a one-digit number
 int stringToNumber(char string[]) {
-    int sLenght = strlen(string);
-    while (sLenght > 9)
-        sLenght = sLenght - 10;
-    return sLenght;
+    int sLength = strlen(string);
+    while (sLength > 9)
+        sLength = sLength - 10;
+    return sLength;
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
