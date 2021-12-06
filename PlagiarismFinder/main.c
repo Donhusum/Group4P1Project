@@ -12,7 +12,7 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]);
 
 void numberFile(char origin[], char location[]);
 
-void numberAccumulator(char location[], int numberChunk);
+void numberAccumulator(char location[], int buckets[]);
 
 void periodeRemover(char *dotString);
 
@@ -47,12 +47,12 @@ int main() {
 
     compare("NumberFileOrigin.txt", "NumberFileTester.txt");
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
-
+/*
     remove("OriginalDocTester.txt");
     remove("HandInFromStudentTester.txt");
     remove("NumberFileOrigin.txt");
     remove("NumberFileTester.txt");
-
+*/
 
     printf("\n You can now close the window \n");
     scanf(" %s", &stringMan1);
@@ -92,6 +92,11 @@ void createWorkFile(char origin[], char testFile[]) {
 
 // converts text to number chunks and puts them into a file
 void numberFile(char origin[], char location[]) {
+    int buckets[10000];
+    int i;
+    for ( i = 0; i < 10000; ++i) {
+        buckets[i]=0;
+    }
     FILE *fileHandler1, *fileHandler2;
     char stringHandler1[100], stringHandler2[100], stringHandler3[100], stringHandler4[100], dotFinder;
     int numberChunk;
@@ -109,7 +114,7 @@ void numberFile(char origin[], char location[]) {
             periodeRemover(stringHandler4);
 
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-            numberAccumulator(location, numberChunk);
+            buckets[numberChunk]++;
 
             //Flytter dotten, medmindre der findes et slutpunktum
             fseek(fileHandler1, -2, SEEK_CUR);
@@ -122,6 +127,7 @@ void numberFile(char origin[], char location[]) {
         fclose(fileHandler1);
         fclose(fileHandler2);
     }
+    numberAccumulator(location, buckets);
 }
 
 // Generates the chunk number
@@ -137,40 +143,24 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]) {
 // Converts a string to a one-digit number
 int stringToNumber(char string[]) {
     int sLenght = strlen(string);
-    //printf(" sLenght: %d", sLenght);
     while (sLenght > 9)
         sLenght = sLenght - 10;
     return sLenght;
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
-void numberAccumulator(char location[], int numberChunk) {
+void numberAccumulator(char location[], int buckets[]) {
+
     FILE *fileHandler3;
-    int dubVal = 0, duplicateChecker;
-    fileHandler3 = fopen(location, "r+");
+    int i;
+    fileHandler3 = fopen(location, "w");
 
-    if (fileHandler3 == NULL) {
-        perror("\n Error at numberAccumulator: ");
-    } else {
-        while (fscanf(fileHandler3, " %d", &duplicateChecker) != EOF) {
-            if (duplicateChecker == numberChunk) {
-                fscanf(fileHandler3, " %d", &dubVal);
-                if (dubVal != 9) {
-                    fseek(fileHandler3, -2, SEEK_CUR);
-                    fprintf(fileHandler3, " %d", (dubVal + 1));
-                    fseek(fileHandler3, 0, SEEK_CUR);
-                }
-                break;
-            } else {
-                fscanf(fileHandler3, " %d", &duplicateChecker);
-            }
+    for ( i = 0; i < 10000; ++i) {
+        if (buckets[i]>0){
+            fprintf(fileHandler3, " %d %d \n", i, buckets[i]);
         }
-        if (dubVal == 0) {
-            fprintf(fileHandler3, " %d %d  \n", numberChunk, 1);
-        }
-
-        fclose(fileHandler3);
     }
+    fclose(fileHandler3);
 }
 
 void periodeRemover(char *dotString) {
@@ -185,7 +175,7 @@ void periodeRemover(char *dotString) {
     }
 }
 
-
+// Function that compare the two hashed files
 void compare(char oriFile[], char testFile[]) {
     FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
     if (orif == NULL || testf == NULL) {
@@ -212,6 +202,7 @@ void compare(char oriFile[], char testFile[]) {
     }
 }
 
+
 void printNumbers(char location[]){
     int chunkInt1, chunkInt2;
     FILE *fileHandler1 = fopen(location, "r");
@@ -226,6 +217,7 @@ void printNumbers(char location[]){
     }
     fclose(fileHandler1);
 }
+
 
 void inputFile(char originalWorkFile[], char testItFile[]){
     printf(" Input the file name of the file to be tested: \n");
