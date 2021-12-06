@@ -86,8 +86,6 @@ void createWorkFile(char origin[], char testFile[]) {
     }
 }
 
-
-
 // Fingerprint function(s)
 
 // converts text to number chunks and puts them into a file
@@ -116,7 +114,7 @@ void numberFile(char origin[], char location[]) {
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
             buckets[numberChunk]++;
 
-            //Flytter dotten, medmindre der findes et slutpunktum
+            // Flytter pointeren til næste punktum.
             fseek(fileHandler1, -2, SEEK_CUR);
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
                 if (dotFinder == '.') {
@@ -197,6 +195,17 @@ void compare(char oriFile[], char testFile[]) {
                "Number of plagiarism hits = %d\n "
                "Percentage plagiarism = %d%%\n",
                testCount, plagCount, 100 * plagCount / testCount);
+        int plagPercent = 100 * plagCount / testCount;
+        if(plagPercent>80) {
+            printf(" |This is a placeholder text|\n Plagiarism score: 4\n Almost definitely plagiarism, most likely the whole text \n");
+        } else if (plagPercent>60){
+            printf(" |This is a placeholder text|\n Plagiarism score: 3\n Very high probability of containing plagiarism, most likely several sections\n");
+        }else if (plagPercent>40){
+            printf(" |This is a placeholder text|\n Plagiarism score: 2\n High probability of containing plagiarism, can be one or more sections \n");
+        }else if (plagPercent>20){
+            printf(" |This is a placeholder text|\n Plagiarism score: 1\n Small chance of plagiarism, might only be a small section \n");
+        }else
+            printf(" |This is a placeholder text|\n Plagiarism score: 0\n No plagiarism or only a few sentences \n");
         fclose(orif);
         fclose(testf);
     }
@@ -217,7 +226,6 @@ void printNumbers(char location[]){
     }
     fclose(fileHandler1);
 }
-
 
 void inputFile(char originalWorkFile[], char testItFile[]){
     printf(" Input the file name of the file to be tested: \n");
