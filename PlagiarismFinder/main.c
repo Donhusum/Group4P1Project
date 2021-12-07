@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+typedef struct
+{
+    int bucket;    // START INDEX i.e. BUCKET NUMBER
+    int dubval; // DUBLICATE VALUE
+} bucket;
+
 void createWorkFile(char origin[], char subject[]);
 
 int stringToNumber(char string[]);
@@ -12,7 +18,7 @@ int fourFirstStrings(char a[], char b[], char c[], char d[]);
 
 void numberFile(char origin[], char location[]);
 
-void numberAccumulator(char location[], int buckets[]);
+void numberAccumulator(char location[], bucket buckets[]);
 
 void periodeRemover(char *dotString);
 
@@ -22,11 +28,15 @@ void printNumbers(char location[]);
 
 void inputFile(char originalWorkFile[], char testItFile[]);
 
+int compare_buckets(const void* a, const void* b);
 
+void sort_buckets(bucket buckets[]);
 int main() {
 
     char stringMan1[100] = "OriginalWork.txt", stringMan2[100] = "TextToBeTested.txt";
     printf(" Plagiarism Finder: \n\n");
+
+
 
     //inputFile(stringMan1, stringMan2);
 
@@ -38,7 +48,7 @@ int main() {
 
     printf(" OriginalWork:\n");
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
-    printf(" TestToBeTested:\n");
+    printf(" TextToBeTested:\n");
     numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
@@ -90,10 +100,16 @@ void createWorkFile(char origin[], char testFile[]) {
 
 // converts text to number chunks and puts them into a file
 void numberFile(char origin[], char location[]) {
-    int buckets[10000];
     int i;
+    /*int buckets[10000];
     for ( i = 0; i < 10000; ++i) {
         buckets[i]=0;
+    }*/
+
+    bucket buckets[10000];
+    for(i = 0; i < 10000; i++){
+        buckets[i].bucket = i;
+        buckets[i].dubval = 0;
     }
     FILE *fileHandler1, *fileHandler2;
     char stringHandler1[100], stringHandler2[100], stringHandler3[100], stringHandler4[100], dotFinder;
@@ -112,7 +128,8 @@ void numberFile(char origin[], char location[]) {
             periodeRemover(stringHandler4);
 
             numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
-            buckets[numberChunk]++;
+            //buckets[numberChunk]++;
+            buckets[numberChunk].dubval++;
 
             // Flytter pointeren til næste punktum.
             fseek(fileHandler1, -2, SEEK_CUR);
@@ -125,7 +142,18 @@ void numberFile(char origin[], char location[]) {
         fclose(fileHandler1);
         fclose(fileHandler2);
     }
+    sort_buckets(buckets);
     numberAccumulator(location, buckets);
+}
+
+void sort_buckets(bucket buckets[]){
+    qsort(buckets, 10000, sizeof(*buckets), compare_buckets);
+}
+
+int compare_buckets(const void* a, const void* b){
+    int value1 = ((bucket*)a)->dubval;
+    int value2 = ((bucket*)b)->dubval;
+    return value2-value1;
 }
 
 // Generates the chunk number
@@ -147,15 +175,15 @@ int stringToNumber(char string[]) {
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
-void numberAccumulator(char location[], int buckets[]) {
+void numberAccumulator(char location[], bucket buckets[]) {
 
     FILE *fileHandler3;
     int i;
     fileHandler3 = fopen(location, "w");
 
     for ( i = 0; i < 10000; ++i) {
-        if (buckets[i]>0){
-            fprintf(fileHandler3, " %d %d \n", i, buckets[i]);
+        if (buckets[i].dubval>0){
+            fprintf(fileHandler3, " %d %d \n", buckets[i].bucket, buckets[i].dubval);
         }
     }
     fclose(fileHandler3);
