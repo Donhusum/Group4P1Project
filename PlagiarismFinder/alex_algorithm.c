@@ -7,32 +7,6 @@
 
 int main(void)
 {
-    int WordLen;
-    int i;
-    int SentenceLen = 4;
-    unsigned long SentenceSum;
-    char SentenceArray[SentenceLen][20];
-    printf("Insert %i word sentence \n", SentenceLen);
-    for (i = 0; i < 4; i++)
-        scanf("%s", SentenceArray[i]);
-    for (i = 0; i < SentenceLen; i++)
-        printf("%s ", SentenceArray[i]);
-    printf("\n");
-//    char *Sentence = (char *) malloc(SentenceLen * sizeof(char));
-    for (i = 0; i < SentenceLen; i++)
-    {
-        int g;
-        int sum = 0;
-        for (g = 0; g < 4; g++)
-        {
-            int olehenriksen = SentenceArray[i][g];
-            printf("Value of letter nr %i is: %i \n", g, olehenriksen);
-        }
-        printf("\n");
-    }
-
-
- 
 // Plagiarism overview:
 // 1. Open 2 files, original and hand-in.
     FILE *fileIn = fopen("original.txt", "r");
@@ -103,8 +77,8 @@ int main(void)
         perror("\n Error at createWorkFile: ");
         fclose(fileOut2);
         fclose(fileIn2);
-    } 
-    else 
+    }
+    else
     {
         char StringBoy, dotFinder;
         int DotFinderDelay=0;
@@ -126,7 +100,56 @@ int main(void)
         fclose(fileOut2);
         fclose(fileIn2);
     }
-
+    FILE *fileFormatted = fopen("output2.txt", "r")
+    int WordLen;
+    int i;
+    int SentenceLen = 4;
+    unsigned long SentenceSum;
+    char SentenceArray[SentenceLen][30];
+//    char *Sentence = (char *) malloc(SentenceLen * sizeof(char));
+    for (i = 0; i < SentenceLen; i++)
+    {
+        int g;
+        int sum = 0;
+        for (g = 0; g < 4; g++)
+        {
+            int olehenriksen = SentenceArray[i][g];
+            printf("Value of letter nr %i is: %i \n", g, olehenriksen);
+        }
+        printf("\n");
+    }
+    /*
+//copied from https://www.w3resource.com/c-programming-exercises/string/c-string-exercise-31.php
+    char str1[100];
+    char newString[10][10]; 
+    int i,j,ctr;
+       printf("\n\n Split string by space into words :\n");
+       printf("---------------------------------------\n");    
+ 
+    printf(" Input  a string : ");
+    fgets(str1, sizeof str1, stdin);	
+ 
+    j=0; ctr=0;
+    for(i=0;i<=(strlen(str1));i++)
+    {
+        // if space or NULL found, assign NULL into newString[ctr]
+        if(str1[i]==' '||str1[i]=='\0')
+        {
+            newString[ctr][j]='\0';
+            ctr++;  //for next word
+            j=0;    //for next word, init index to 0
+        }
+        else
+        {
+            newString[ctr][j]=str1[i];
+            j++;
+        }
+    }
+    printf("ctr is now %i \n", ctr);
+    printf("\n Strings or words after split by space are :\n");
+    for(i=0;i < ctr;i++)
+        printf(" %s\n",newString[i]);
+    */
     return 0;
 }
 
