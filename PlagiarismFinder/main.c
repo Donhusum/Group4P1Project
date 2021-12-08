@@ -256,10 +256,9 @@ void printNumbers(char location[]){
 }
 
 void inputFile(char originalWorkFile[], char testItFile[]){
-    printf(" Input the file name of the file to be tested: \n");
+    printf(" Input the file name of the file to be tested (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]",testItFile);
-    printf("\n Input the file name of the file to it should be tested against: \n");
+    printf("\n Input the file name of the file to it should be tested against (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]",originalWorkFile);
-
 }
 
