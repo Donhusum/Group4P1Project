@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
 
 typedef struct
 {
@@ -14,11 +15,11 @@ void createWorkFile(char origin[], char subject[]);
 
 int stringToNumber(char string[]);
 
-int fourFirstStrings(char a[], char b[], char c[], char d[]);
+int fourFirstStrings(char a[][100], int n);
 
-void numberFile(char origin[], char location[]);
+void numberFile(char origin[], char location[], int n);
 
-void numberAccumulator(char location[], bucket buckets[]);
+void numberAccumulator(char location[], bucket buckets[], int n);
 
 void periodeRemover(char *dotString);
 
@@ -26,19 +27,18 @@ void compare(char oriFile[], char testFile[]);
 
 void printNumbers(char location[]);
 
-void inputFile(char originalWorkFile[], char testItFile[]);
+int inputFile(char originalWorkFile[], char testItFile[]);
 
 int compare_buckets(const void* a, const void* b);
 
-void sort_buckets(bucket buckets[]);
+void sort_buckets(bucket buckets[], int n);
 int main() {
 
     char stringMan1[100] = "OriginalWork.txt", stringMan2[100] = "TextToBeTested.txt";
+    int n = 4;
     printf(" Plagiarism Finder: \n\n");
 
-
-
-    inputFile(stringMan1, stringMan2);
+    n = inputFile(stringMan1, stringMan2);
 
     //Opens the original doc, and the copy that we will work with
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
@@ -46,14 +46,14 @@ int main() {
     createWorkFile(stringMan1, "OriginalDocTester.txt");
     createWorkFile(stringMan2, "HandInFromStudentTester.txt");
 
-    //printf(" OriginalWork:\n");
-    numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
-    //printf(" TextToBeTested:\n");
-    numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
+    printf(" OriginalWork:\n");
+    numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt", n);
+    printf(" TextToBeTested:\n");
+    numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt", n);
 
 
-    //printNumbers("NumberFileOrigin.txt");
-    //printNumbers("NumberFileTester.txt");
+    printNumbers("NumberFileOrigin.txt");
+    printNumbers("NumberFileTester.txt");
 
     compare( "NumberFileTester.txt", "NumberFileOrigin.txt");
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
@@ -99,35 +99,41 @@ void createWorkFile(char origin[], char testFile[]) {
 // Fingerprint function(s)
 
 // converts text to number chunks and puts them into a file
-void numberFile(char origin[], char location[]) {
+void numberFile(char origin[], char location[], int n) {
     int i;
     /*int buckets[10000];
     for ( i = 0; i < 10000; ++i) {
         buckets[i]=0;
     }*/
 
-    bucket buckets[10000];
-    for(i = 0; i < 10000; i++){
+    bucket buckets[((int)pow(10,n))];
+    for(i = 0; i < ((int)pow(10,n)); i++){
         buckets[i].bucket = i;
         buckets[i].dubval = 0;
     }
     FILE *fileHandler1, *fileHandler2;
-    char stringHandler1[100], stringHandler2[100], stringHandler3[100], stringHandler4[100], dotFinder;
-    int numberChunk;
+    char stringHandlerMaster[n][100], dotFinder;
+    int numberChunk, end = 0;
     fileHandler1 = fopen(origin, "r");
     fileHandler2 = fopen(location, "w+");
     if (fileHandler1 == NULL || fileHandler2 == NULL) {
         perror("\n Error at numberFile: ");
     } else {
-        while (fscanf(fileHandler1, " %s %s %s %s", stringHandler1, stringHandler2, stringHandler3, stringHandler4) >
-               -1) {
-            //Fjerner punktummer til sidst
-            periodeRemover(stringHandler1);
-            periodeRemover(stringHandler2);
-            periodeRemover(stringHandler3);
-            periodeRemover(stringHandler4);
+        while (1) {
+            for ( i = 0; i < n; ++i) {
+                if (fscanf(fileHandler1, " %s", stringHandlerMaster[i])<1){
+                    end = 1;
+                }
+            }
+            if (end ==1){
+                break;
+            }
 
-            numberChunk = fourFirstStrings(stringHandler1, stringHandler2, stringHandler3, stringHandler4);
+            //Fjerner punktummer til sidst
+            for ( i = 0; i < n; ++i) {
+                periodeRemover(stringHandlerMaster[i]);
+            }
+            numberChunk = fourFirstStrings(stringHandlerMaster, n);
             //buckets[numberChunk]++;
             buckets[numberChunk].dubval++;
 
@@ -142,12 +148,12 @@ void numberFile(char origin[], char location[]) {
         fclose(fileHandler1);
         fclose(fileHandler2);
     }
-    sort_buckets(buckets);
-    numberAccumulator(location, buckets);
+    sort_buckets(buckets, n);
+    numberAccumulator(location, buckets, n);
 }
 
-void sort_buckets(bucket buckets[]){
-    qsort(buckets, 10000, sizeof(*buckets), compare_buckets);
+void sort_buckets(bucket buckets[], int n){
+    qsort(buckets, ((int)pow(10,n)), sizeof(*buckets), compare_buckets);
 }
 
 int compare_buckets(const void* a, const void* b){
@@ -157,12 +163,12 @@ int compare_buckets(const void* a, const void* b){
 }
 
 // Generates the chunk number
-int fourFirstStrings(char a[], char b[], char c[], char d[]) {
-    int numb = 0;
-    numb = numb + 1000 * stringToNumber(a);
-    numb = numb + 100 * stringToNumber(b);
-    numb = numb + 10 * stringToNumber(c);
-    numb = numb + stringToNumber(d);
+int fourFirstStrings(char a[][100], int n) {
+    int numb = 0, i;
+    for ( i = 0; i < n; ++i) {
+        numb = numb * 10 + stringToNumber(a[i]);
+    }
+
     return numb;
 }
 
@@ -175,13 +181,13 @@ int stringToNumber(char string[]) {
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
-void numberAccumulator(char location[], bucket buckets[]) {
+void numberAccumulator(char location[], bucket buckets[], int n) {
 
     FILE *fileHandler3;
     int i;
     fileHandler3 = fopen(location, "w");
 
-    for ( i = 0; i < 10000; ++i) {
+    for ( i = 0; i < ((int)pow(10,n)); ++i) {
         if (buckets[i].dubval>0){
             fprintf(fileHandler3, " %d %d \n", buckets[i].bucket, buckets[i].dubval);
         }
@@ -219,10 +225,10 @@ void compare(char oriFile[], char testFile[]) {
             rewind(testf);
             fscanf(orif, " %d", &oriNum);
         }
-        /*printf(" Number of compared sentences = %d\n "
+        printf(" Number of compared sentences = %d\n "
                "Number of plagiarism hits = %d\n "
                "Percentage plagiarism = %d%%\n",
-               testCount, plagCount, 100 * plagCount / testCount);*/
+               testCount, plagCount, 100 * plagCount / testCount);
         int plagPercent = 100 * plagCount / testCount;
         if(plagPercent>80) {
             printf(" \n Plagiarism score: 4\n Almost definitely plagiarism, most likely the whole text \n");
@@ -255,10 +261,14 @@ void printNumbers(char location[]){
     fclose(fileHandler1);
 }
 
-void inputFile(char originalWorkFile[], char testItFile[]){
+int inputFile(char originalWorkFile[], char testItFile[]){
+    int n;
     printf(" Input the file name of the file to be tested (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]",testItFile);
     printf("\n Input the file name of the file to it should be tested against (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]",originalWorkFile);
+    printf("\n Type a number: \n");
+    scanf(" %d", &n);
+    return n;
 }
 
