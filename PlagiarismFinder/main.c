@@ -219,21 +219,21 @@ void compare(char oriFile[], char testFile[]) {
             rewind(testf);
             fscanf(orif, " %d", &oriNum);
         }
-        printf(" Number of compared sentences = %d\n "
+        /*printf(" Number of compared sentences = %d\n "
                "Number of plagiarism hits = %d\n "
                "Percentage plagiarism = %d%%\n",
-               testCount, plagCount, 100 * plagCount / testCount);
+               testCount, plagCount, 100 * plagCount / testCount);*/
         int plagPercent = 100 * plagCount / testCount;
         if(plagPercent>80) {
-            printf(" |This is a placeholder text|\n Plagiarism score: 4\n Almost definitely plagiarism, most likely the whole text \n");
+            printf(" \n Plagiarism score: 4\n Almost definitely plagiarism, most likely the whole text \n");
         } else if (plagPercent>60){
-            printf(" |This is a placeholder text|\n Plagiarism score: 3\n Very high probability of containing plagiarism, most likely several sections\n");
+            printf(" \n Plagiarism score: 3\n Very high probability of containing plagiarism, most likely several sections\n");
         }else if (plagPercent>40){
-            printf(" |This is a placeholder text|\n Plagiarism score: 2\n High probability of containing plagiarism, can be one or more sections \n");
+            printf(" \n Plagiarism score: 2\n High probability of containing plagiarism, can be one or more sections \n");
         }else if (plagPercent>20){
-            printf(" |This is a placeholder text|\n Plagiarism score: 1\n Small chance of plagiarism, might only be a small section \n");
+            printf(" \n Plagiarism score: 1\n Small chance of plagiarism, might only be a small section \n");
         }else
-            printf(" |This is a placeholder text|\n Plagiarism score: 0\n No plagiarism or only a few sentences \n");
+            printf(" \n Plagiarism score: 0\n No plagiarism or only a few sentences \n");
         fclose(orif);
         fclose(testf);
     }
