@@ -38,7 +38,7 @@ int main() {
 
 
 
-    //inputFile(stringMan1, stringMan2);
+    inputFile(stringMan1, stringMan2);
 
     //Opens the original doc, and the copy that we will work with
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
@@ -46,23 +46,23 @@ int main() {
     createWorkFile(stringMan1, "OriginalDocTester.txt");
     createWorkFile(stringMan2, "HandInFromStudentTester.txt");
 
-    printf(" OriginalWork:\n");
+    //printf(" OriginalWork:\n");
     numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt");
-    printf(" TextToBeTested:\n");
+    //printf(" TextToBeTested:\n");
     numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt");
 
 
-    printNumbers("NumberFileOrigin.txt");
-    printNumbers("NumberFileTester.txt");
+    //printNumbers("NumberFileOrigin.txt");
+    //printNumbers("NumberFileTester.txt");
 
-    compare("NumberFileOrigin.txt", "NumberFileTester.txt");
+    compare( "NumberFileTester.txt", "NumberFileOrigin.txt");
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
-/*
+
     remove("OriginalDocTester.txt");
     remove("HandInFromStudentTester.txt");
     remove("NumberFileOrigin.txt");
     remove("NumberFileTester.txt");
-*/
+
 
     printf("\n You can now close the window \n");
     scanf(" %s", &stringMan1);
