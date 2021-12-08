@@ -113,7 +113,7 @@ void numberFile(char origin[], char location[], int n) {
     }
     FILE *fileHandler1, *fileHandler2;
     char stringHandlerMaster[n][100], dotFinder;
-    int numberChunk, end = 0;
+    int numberChunk, end = 0, rewindVal;
     fileHandler1 = fopen(origin, "r");
     fileHandler2 = fopen(location, "w+");
     if (fileHandler1 == NULL || fileHandler2 == NULL) {
@@ -138,12 +138,17 @@ void numberFile(char origin[], char location[], int n) {
             buckets[numberChunk].dubval++;
 
             // Flytter pointeren til næste punktum.
-            fseek(fileHandler1, -2, SEEK_CUR);
+            for ( i = 0; i < n; ++i) {
+                rewindVal += strlen(stringHandlerMaster[i]);
+            }
+
+            fseek(fileHandler1, -rewindVal, SEEK_CUR);
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
                 if (dotFinder == '.') {
                     break;
                 }
             }
+            rewindVal = 0;
         }
         fclose(fileHandler1);
         fclose(fileHandler2);
