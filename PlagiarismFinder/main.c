@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <dirent.h>
 
 typedef struct
 {
@@ -105,12 +106,15 @@ void numberFile(char origin[], char location[], int n) {
     for ( i = 0; i < 10000; ++i) {
         buckets[i]=0;
     }*/
+    printf(" 0.9\n");
 
     bucket buckets[((int)pow(10,n))];
+    printf(" 0.95\n");
     for(i = 0; i < ((int)pow(10,n)); i++){
         buckets[i].bucket = i;
         buckets[i].dubval = 0;
     }
+    printf("1.\n");
     FILE *fileHandler1, *fileHandler2;
     char stringHandlerMaster[n][100], dotFinder;
     int numberChunk, end = 0, rewindVal;
@@ -123,6 +127,7 @@ void numberFile(char origin[], char location[], int n) {
             for ( i = 0; i < n; ++i) {
                 if (fscanf(fileHandler1, " %s", stringHandlerMaster[i])<1){
                     end = 1;
+                    printf(" Why stop!\n");
                 }
             }
             if (end ==1){
@@ -133,6 +138,7 @@ void numberFile(char origin[], char location[], int n) {
             for ( i = 0; i < n; ++i) {
                 periodeRemover(stringHandlerMaster[i]);
             }
+            printf(" 2.\n");
             numberChunk = fourFirstStrings(stringHandlerMaster, n);
             //buckets[numberChunk]++;
             buckets[numberChunk].dubval++;
@@ -268,6 +274,17 @@ void printNumbers(char location[]){
 
 int inputFile(char originalWorkFile[], char testItFile[]){
     int n;
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(".");
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+    }
     printf(" Input the file name of the file to be tested (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]",testItFile);
     printf("\n Input the file name of the file to it should be tested against (include '.txt'): \n");
