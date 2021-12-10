@@ -3,7 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <ctype.h>
-
+int RealWordCounter;
 
 int main(void)
 {
@@ -24,7 +24,7 @@ int main(void)
         {
             if (StringBoy == '\n')
             {
-                fputc(' ',fileOut);
+                fputc('\n',fileOut);
             } 
             else if (isalpha(StringBoy) != 0 || StringBoy == ' ' || StringBoy == '.' ) 
             {
@@ -37,69 +37,100 @@ int main(void)
     }
 
     /*
-    FILE *fileIn2 = fopen("output.txt", "r");
+    FILE *fileIn = fopen("output.txt", "r");
     
-    FILE *fileOut2 = fopen("output2.txt", "w");
+    FILE *fileOut = fopen("output2.txt", "w");
     if (fileIn == NULL || fileOut == NULL) 
     {
         perror("\n Error at createWorkFile: ");
-        fclose(fileOut2);
-        fclose(fileIn2);
+        fclose(fileOut);
+        fclose(fileIn);
     } 
     else 
     {
         char StringBoy;
         char StringBoy2;
         int counter=0;
-        while ((StringBoy = fgetc(fileIn2)) != EOF) 
+        while ((StringBoy = fgetc(fileIn)) != EOF) 
         {
             if(counter =! 0)
-                StringBoy2 = fgetc(fileIn2);
+                StringBoy2 = fgetc(fileIn);
             counter++;
             if (StringBoy == ' ' && StringBoy2 == '.')
             {
-                fputc('\n',fileOut2);
+                fputc('\n',fileOut);
             }
             else if (StringBoy != NULL) 
             {
-                fputc(StringBoy, fileOut2);
+                fputc(StringBoy, fileOut);
             }
         }
-        fclose(fileOut2);
-        fclose(fileIn2);
+        fclose(fileOut);
+        fclose(fileIn);
     }
     */
-    FILE *fileIn2 = fopen("output.txt", "r");
-    FILE *fileIn3 = fopen("output.txt", "r");
-    FILE *fileOut2 = fopen("output2.txt", "w");
-    if (fileIn2 == NULL || fileOut2 == NULL) 
+    fileIn = fopen("output.txt", "r");
+    FILE *dotFinderFile = fopen("output.txt", "r");
+    fileOut = fopen("output2.txt", "w");
+    if (fileIn == NULL || fileOut == NULL) 
     {
         perror("\n Error at createWorkFile: ");
-        fclose(fileOut2);
-        fclose(fileIn2);
+        fclose(fileOut);
+        fclose(fileIn);
     }
     else
     {
         char StringBoy, dotFinder;
         int DotFinderDelay=0;
-        while ((StringBoy = fgetc(fileIn2)) != EOF) 
+        while ((StringBoy = fgetc(fileIn)) != EOF) 
         {
             if(
                 DotFinderDelay != 0)
-                dotFinder = fgetc(fileIn3);
+                dotFinder = fgetc(dotFinderFile);
             DotFinderDelay++;
             if (StringBoy == ' ' && dotFinder == '.')
             {
-                fputc('\n',fileOut2);
+                fputc('\n',fileOut);
             }
             else if (StringBoy != '.') 
             {
-                fputc(StringBoy, fileOut2);
+                fputc(StringBoy, fileOut);
             }
         }
-        fclose(fileOut2);
-        fclose(fileIn2);
+        fclose(fileOut);
+        fclose(fileIn);
+        fclose(dotFinderFile);
     }
+
+//
+//  This code opens the final outputtext and counts the words in it. Using isspace to check if a char is a space and checks the previous symbol to determine if
+//  the space marked the end of a word or is just space.
+//
+    fileIn = fopen("output2.txt", "rb+");
+    int wordcounter=1;
+    char symbol;
+    printf("\n Symbols are: \n");
+    while((symbol=fgetc(fileIn))!= EOF)
+    {   
+        printf("%c", symbol);
+        if(isspace(symbol))
+        {
+            fseek(fileIn, -2, SEEK_CUR);
+            symbol=fgetc(fileIn);
+            if(isspace(symbol))
+            {
+                symbol = ' ';
+            }
+            if(isspace(symbol) == 0)
+            {   
+                wordcounter++;
+            }
+            symbol=fgetc(fileIn);
+        }
+    }
+    RealWordCounter=wordcounter;
+    printf("\n Word count: %i\n", RealWordCounter);
+    fclose(fileIn);
 
 
 
@@ -110,9 +141,10 @@ int main(void)
     char str1[200];
     char newString[50][50]; 
     int j,ctr;
+    int df=1;
     while (fgets(str1, sizeof str1, fileFormatted) != NULL) 
     {
-        printf("str1 = \"%s\"",str1);
+        printf("%i. str1 = \"%s\"",df, str1);
         j=0; 
         ctr=0;
         int i=0;
@@ -131,8 +163,10 @@ int main(void)
                 j++;
             }
         }
+        df++;
         fwrite(str1, sizeof(char), sizeof(str1), testoutput);
     }
+    fclose(fileFormatted);
     fclose(testoutput);
 
 
