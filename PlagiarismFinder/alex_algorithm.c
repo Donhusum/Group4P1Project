@@ -100,13 +100,54 @@ int main(void)
         fclose(fileOut2);
         fclose(fileIn2);
     }
-    FILE *fileFormatted = fopen("output2.txt", "r")
+
+
+
+
+
+    FILE *fileFormatted = fopen("output2.txt", "r");
+    FILE *testoutput = fopen("testoutput.txt", "w");
+    char str1[200];
+    char newString[50][50]; 
+    int j,ctr;
+    while (fgets(str1, sizeof str1, fileFormatted) != NULL) 
+    {
+        printf("str1 = \"%s\"",str1);
+        j=0; 
+        ctr=0;
+        int i=0;
+        for(i=0;i<=(strlen(str1));i++)
+        {
+            // if space or NULL found, assign NULL into newString[ctr]
+            if(str1[i]==' '||str1[i]=='\0')
+            {
+                newString[ctr][j]='\0';
+                ctr++;  //for next word
+                j=0;    //for next word, init index to 0
+            }
+            else
+            {
+                newString[ctr][j]=str1[i];
+                j++;
+            }
+        }
+        fwrite(str1, sizeof(char), sizeof(str1), testoutput);
+    }
+    fclose(testoutput);
+
+
+
+
+
+
+
+
     int WordLen;
-    int i;
     int SentenceLen = 4;
     unsigned long SentenceSum;
     char SentenceArray[SentenceLen][30];
 //    char *Sentence = (char *) malloc(SentenceLen * sizeof(char));
+    int i;
     for (i = 0; i < SentenceLen; i++)
     {
         int g;
@@ -114,7 +155,7 @@ int main(void)
         for (g = 0; g < 4; g++)
         {
             int olehenriksen = SentenceArray[i][g];
-            printf("Value of letter nr %i is: %i \n", g, olehenriksen);
+            printf("\nValue of letter nr %i is: %i \n", g, olehenriksen);
         }
         printf("\n");
     }
