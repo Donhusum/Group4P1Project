@@ -284,7 +284,9 @@ int inputFile(char originalWorkFile[], char testItFile[]) {
     scanf(" %[A-Za-z0-9 ._-!]", testItFile);
     printf("\n Input the file name of the file to it should be tested against (include '.txt'): \n");
     scanf(" %[A-Za-z0-9 ._-!]", originalWorkFile);
-    printf("\n Type a number: \n");
+    printf("\n Type a number. The number should be between 4 and 8, where 4 or 5 is best for documents less than 100 "
+           "pages and 6 or 7 is best for document 100+ pages. The higher numbers will give the the test more accuracy, "
+           "but is also more susceptible to small changes meant to fool plagiarism tools \n");
     scanf(" %d", &n);
     return n;
 }
