@@ -17,13 +17,13 @@ int stringToNumber(char string[]);
 
 int fourFirstStrings(char a[][50], int n);
 
-void numberFile(char origin[], char location[], int n);
+int numberFile(char origin[], char location[], int n);
 
-void numberAccumulator(char location[], bucket buckets[], int n);
+int numberAccumulator(char location[], bucket buckets[], int n);
 
 void periodeRemover(char *dotString);
 
-void compare(char oriFile[], char testFile[]);
+void compare(char oriFile[], char testFile[], int testCount);
 
 void printNumbers(char location[]);
 
@@ -36,7 +36,7 @@ void sort_buckets(bucket buckets[], int n);
 int main() {
 
     char stringMan1[100] = "OriginalWork.txt", stringMan2[100] = "TextToBeTested.txt";
-    int n = 4;
+    int n = 4, count;
     //printf(" Plagiarism Finder: \n\n");
 
     //n = inputFile(stringMan1, stringMan2);
@@ -48,15 +48,15 @@ int main() {
     createWorkFile(stringMan2, "HandInFromStudentTester.txt");
 
     printf(" OriginalWork:\n");
-    numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt", n);
+    count = numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt", n);
     printf(" TextToBeTested:\n");
-    numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt", n);
+    count = numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt", n);
 
 
     //printNumbers("NumberFileOrigin.txt");
     //printNumbers("NumberFileTester.txt");
 
-    compare("NumberFileTester.txt", "NumberFileOrigin.txt");
+    compare("NumberFileOrigin.txt","NumberFileTester.txt", count);
     //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
 
     remove("OriginalDocTester.txt");
@@ -100,7 +100,7 @@ void createWorkFile(char origin[], char testFile[]) {
 // Fingerprint function(s)
 
 // converts text to number chunks and puts them into a file
-void numberFile(char origin[], char location[], int n) {
+int numberFile(char origin[], char location[], int n) {
     int i;
     /*int buckets[10000];
     for ( i = 0; i < 10000; ++i) {
@@ -114,7 +114,7 @@ void numberFile(char origin[], char location[], int n) {
     }
     FILE *fileHandler1, *fileHandler2;
     char stringHandlerMaster[n][50], dotFinder;
-    int numberChunk, end = 0, rewindVal;
+    int numberChunk, end = 0, rewindVal, count;
     fileHandler1 = fopen(origin, "r");
     fileHandler2 = fopen(location, "w+");
     if (fileHandler1 == NULL || fileHandler2 == NULL) {
@@ -156,8 +156,9 @@ void numberFile(char origin[], char location[], int n) {
         fclose(fileHandler2);
     }
     sort_buckets(buckets, n);
-    numberAccumulator(location, buckets, n);
+    count = numberAccumulator(location, buckets, n);
     free(buckets);
+    return count;
 }
 
 void sort_buckets(bucket buckets[], int n) {
@@ -189,18 +190,20 @@ int stringToNumber(char string[]) {
 }
 
 // Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
-void numberAccumulator(char location[], bucket buckets[], int n) {
+int numberAccumulator(char location[], bucket buckets[], int n) {
 
     FILE *fileHandler3;
-    int i;
+    int i, count = 0;
     fileHandler3 = fopen(location, "w");
 
     for (i = 0; i < ((int) pow(10, n)); ++i) {
         if (buckets[i].dubval > 0) {
             fprintf(fileHandler3, " %d %d \n", buckets[i].bucket, buckets[i].dubval);
+            count += buckets[i].dubval;
         }
     }
     fclose(fileHandler3);
+    return count;
 }
 
 void periodeRemover(char *dotString) {
@@ -216,20 +219,21 @@ void periodeRemover(char *dotString) {
 }
 
 // Function that compare the two hashed files
-void compare(char oriFile[], char testFile[]) {
+void compare(char oriFile[], char testFile[], int testCount) {
     FILE *orif = fopen(oriFile, "r"), *testf = fopen(testFile, "r");
     if (orif == NULL || testf == NULL) {
         perror("\n Error at compare: ");
     } else {
-        int oriNum, testNum, plagCount = 0, testCount = 0;
+        int oriNum, testNum, plagCount = 0;
         while (fscanf(orif, " %d", &oriNum) != EOF) {
             while (fscanf(testf, " %d", &testNum) != EOF) {
                 if (oriNum == testNum) {
-                    plagCount++;
+                    fscanf(testf, " %d", &testNum);
+                    plagCount += testNum;
+                    break;
                 }
                 fscanf(testf, " %d", &testNum);
             }
-            testCount++;
             rewind(testf);
             fscanf(orif, " %d", &oriNum);
         }
