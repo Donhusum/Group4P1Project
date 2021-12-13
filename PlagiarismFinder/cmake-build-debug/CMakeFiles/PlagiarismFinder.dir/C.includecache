@@ -17,4 +17,8 @@ stdlib.h
 -
 unistd.h
 -
+math.h
+-
+dirent.h
+-
 
