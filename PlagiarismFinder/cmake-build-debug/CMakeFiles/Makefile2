@@ -44,19 +44,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "D:\Programmer\CLion\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f
+RM = "D:\Programmer\CLion\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder"
+CMAKE_SOURCE_DIR = "D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -80,14 +80,14 @@ clean: CMakeFiles/PlagiarismFinder.dir/clean
 CMakeFiles/PlagiarismFinder.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PlagiarismFinder.dir\build.make CMakeFiles/PlagiarismFinder.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PlagiarismFinder.dir\build.make CMakeFiles/PlagiarismFinder.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" --progress-num=1,2 "Built target PlagiarismFinder"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" --progress-num=1,2 "Built target PlagiarismFinder"
 .PHONY : CMakeFiles/PlagiarismFinder.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PlagiarismFinder.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/PlagiarismFinder.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\stefa\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Google Drive\AAU\1. semester\P1\GIT\Group4P1Project\PlagiarismFinder\cmake-build-debug\CMakeFiles" 0
 .PHONY : CMakeFiles/PlagiarismFinder.dir/rule
 
 # Convenience name for target.

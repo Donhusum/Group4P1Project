@@ -39,7 +39,7 @@ int main() {
     int n = 4, count;
     //printf(" Plagiarism Finder: \n\n");
 
-    //n = inputFile(stringMan1, stringMan2);
+    n = inputFile(stringMan1, stringMan2);
 
     //Opens the original doc, and the copy that we will work with
     //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
@@ -280,7 +280,10 @@ int inputFile(char originalWorkFile[], char testItFile[]) {
     d = opendir(".");
     if (d) {
         while ((dir = readdir(d)) != NULL) {
-            printf("%s\n", dir->d_name);
+            if (dir->d_type == DT_REG)
+            {
+                printf("%s\n", dir->d_name);
+            }
         }
         closedir(d);
     }
