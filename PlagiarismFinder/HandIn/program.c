@@ -7,8 +7,8 @@
 #include <dirent.h>
 
 typedef struct {
-    int bucket;    // START INDEX i.e. BUCKET NUMBER
-    int dubval; // DUBLICATE VALUE
+    int bucket;
+    int dubval;
 } bucket;
 
 void createWorkFile(char origin[], char subject[]);
@@ -37,27 +37,20 @@ int main() {
 
     char stringMan1[100] = "OriginalWork.txt", stringMan2[100] = "TextToBeTested.txt";
     int n = 4, count;
-    //printf(" Plagiarism Finder: \n\n");
+    printf(" Plagiarism Finder: \n\n");
 
     n = inputFile(stringMan1, stringMan2);
 
-    //Opens the original doc, and the copy that we will work with
-    //File copier/converter, Copies the original doc into our tester doc, turning uppercase letters into lowercase, and
-    // removing non-letter, non-blankspace symbols
+    // Create two temporary work files
     createWorkFile(stringMan1, "OriginalDocTester.txt");
     createWorkFile(stringMan2, "HandInFromStudentTester.txt");
 
-    printf(" OriginalWork:\n");
+    printf(" Preparing %s \n", stringMan1);
     count = numberFile("OriginalDocTester.txt", "NumberFileOrigin.txt", n);
-    printf(" TextToBeTested:\n");
+    printf(" Preparing %s \n", stringMan2);
     count = numberFile("HandInFromStudentTester.txt", "NumberFileTester.txt", n);
 
-
-    //printNumbers("NumberFileOrigin.txt");
-    //printNumbers("NumberFileTester.txt");
-
     compare("NumberFileOrigin.txt","NumberFileTester.txt", count);
-    //compare("NumberFileTester.txt", "NumberFileOrigin.txt");
 
     remove("OriginalDocTester.txt");
     remove("HandInFromStudentTester.txt");
@@ -71,7 +64,7 @@ int main() {
     return 0;
 }
 
-// Create workfile function
+// Create temp work file function
 void createWorkFile(char origin[], char testFile[]) {
     FILE *fileIn = fopen(origin, "r");
     FILE *fileOut = fopen(testFile, "w");
@@ -102,10 +95,7 @@ void createWorkFile(char origin[], char testFile[]) {
 // converts text to number chunks and puts them into a file
 int numberFile(char origin[], char location[], int n) {
     int i;
-    /*int buckets[10000];
-    for ( i = 0; i < 10000; ++i) {
-        buckets[i]=0;
-    }*/
+
     bucket *buckets =  malloc(sizeof(*buckets) * ((int) pow(10, n)));
 
     for (i = 0; i < ((int) pow(10, n)); i++) {
@@ -130,20 +120,18 @@ int numberFile(char origin[], char location[], int n) {
                 break;
             }
 
-            //Fjerner punktummer til sidst
+            // Removes periods from the words
             for (i = 0; i < n; ++i) {
                 periodeRemover(stringHandlerMaster[i]);
             }
+
             numberChunk = fourFirstStrings(stringHandlerMaster, n);
-            //buckets[numberChunk]++;
             buckets[numberChunk].dubval++;
 
-
-            // Flytter pointeren til næste punktum.
+            // Moves reader pointer in the doc to the next period.
             for (i = 0; i < n; ++i) {
                 rewindVal += (int)strlen(stringHandlerMaster[i]);
             }
-
             fseek(fileHandler1, -rewindVal, SEEK_CUR);
             while ((dotFinder = fgetc(fileHandler1)) != EOF) {
                 if (dotFinder == '.') {
@@ -189,7 +177,7 @@ int stringToNumber(char string[]) {
     return sLength;
 }
 
-// Function that adds the fingerprint to a file, and increases its counter if it is a duplicate
+// Function to write the hashed numbers into a text file
 int numberAccumulator(char location[], bucket buckets[], int n) {
 
     FILE *fileHandler3;
@@ -237,10 +225,7 @@ void compare(char oriFile[], char testFile[], int testCount) {
             rewind(testf);
             fscanf(orif, " %d", &oriNum);
         }
-        printf(" Number of compared sentences = %d\n "
-               "Number of plagiarism hits = %d\n "
-               "Percentage plagiarism = %d%%\n",
-               testCount, plagCount, 100 * plagCount / testCount);
+        //printf(" Number of compared sentences = %d\n Number of plagiarism hits = %d\n Percentage plagiarism = %d%%\n", testCount, plagCount, 100 * plagCount / testCount);
         int plagPercent = 100 * plagCount / testCount;
         if (plagPercent > 80) {
             printf(" \n Plagiarism score: 4\n Almost definitely plagiarism, most likely the whole text \n");
